@@ -1,0 +1,74 @@
+/* ─── App Shell ─── */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+main { flex: 1; }
+
+/* ─── Page transition ─── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-view {
+  animation: page-enter 0.38s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ─── Focus / Selection ─── */
+:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+::selection {
+  background: rgba(0, 212, 200, 0.22);
+  color: var(--clr-text);
+}
+
+/* ─── Bio Background ─── */
+.bio-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Base bio entity: absolutely positioned, low opacity */
+.bio-entity {
+  position: absolute;
+  opacity: 0.10;
+  animation: bioGlow 4s ease-in-out infinite alternate;
+}
+
+/* Virus entities */
+.bio-virus {
+  animation:
+    virusFloat  var(--dur, 20s) ease-in-out var(--delay, 0s) infinite,
+    bioGlow     4s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 6px rgba(244,63,94,0.45));
+}
+.bio-virus--b {
+  animation-name: virusFloat2, bioGlow;
+}
+
+/* Pill entities */
+.bio-pill {
+  width: 110px;
+  animation:
+    pillDrift var(--dur, 20s) ease-in-out var(--delay, 0s) infinite,
+    bioGlow   6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 5px rgba(0,212,200,0.40));
+}
+
+/* Molecule entities */
+.bio-molecule {
+  animation:
+    moleculeSpin var(--dur, 24s) linear var(--delay, 0s) infinite;
+  filter: drop-shadow(0 0 5px rgba(168,85,247,0.40));
+}

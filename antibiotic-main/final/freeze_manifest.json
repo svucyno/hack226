@@ -1,0 +1,45 @@
+{
+  "bundle_version": "1.0.0",
+  "model_version": "ultra_v3",
+  "freeze_timestamp": "20260313_215159",
+  "model_name": "ExtraTrees",
+  "feature_set": "all_safe_v2",
+  "n_features": 38,
+  "threshold": 0.175,
+  "calibration": "none (uncalibrated)",
+  "source_artifacts": "D:\\data\\antibiotic_risk_model\\models\\ultra_v3\\current_best",
+  "artifacts": {
+    "model.joblib": {
+      "sha256": "84a01095d3831941d7fa6dc792a954f47b82b9eb5d97694a04cce4f1c3a71347",
+      "size_bytes": 1074449
+    },
+    "imputer.joblib": {
+      "sha256": "83d4bbada67cbce477309274ccb13f49f488f88d9275a36e9781b7ff9fcc59ce",
+      "size_bytes": 807
+    },
+    "label_encoder.joblib": {
+      "sha256": "eff3cd581dce8e02516030b2c38ae646eca973cd06f9bb0559677d55fc1ae410",
+      "size_bytes": 399
+    },
+    "threshold_policy.json": {
+      "sha256": "83d450513dc9a823444adcccf051d1cdaf71b72dd3c767b8f12f309564ac6ea2",
+      "size_bytes": 276
+    },
+    "feature_info.json": {
+      "sha256": "43597eb570616926ee4aea41548a67c8e68d1eebdd6612ec877a94cf63bcceeb",
+      "size_bytes": 963
+    },
+    "metrics.json": {
+      "sha256": "cb0208c90e5e12e3fd0ca661bc78cc8e8fd7bc70f9aaa94385adcf0b850dbfff",
+      "size_bytes": 3029
+    },
+    "hybrid_rules.json": {
+      "sha256": "00836ab97d9f81527093376e2399590a631ff7caade1c521671c48fa4ddad049",
+      "size_bytes": 1856
+    },
+    "confidence_config.json": {
+      "sha256": "81aa088ef48d19a5cc94f1ffdf3b15a89f92d0e32d86b6a849b064ea5412efc9",
+      "size_bytes": 266
+    }
+  }
+}

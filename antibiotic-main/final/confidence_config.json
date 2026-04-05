@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "conf_high": 0.7,
+  "conf_low": 0.5,
+  "uncertain_gap": 0.15,
+  "description": "Confidence band thresholds for Ultra V3. 'high': max_prob >= 0.70 AND top2_gap >= 0.15. 'low': max_prob < 0.50 OR top2_gap < 0.15. 'medium': otherwise."
+}

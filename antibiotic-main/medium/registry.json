@@ -1,0 +1,31 @@
+{
+  "experiments": [
+    {
+      "timestamp": "20260313_221343",
+      "model_name": "HistGradientBoosting",
+      "model_path": "D:\\data\\antibiotic_risk_model\\models\\medium\\experiments\\20260313_221343\\model.joblib",
+      "weighted_f1": 0.9132,
+      "macro_f1": 0.6508,
+      "balanced_accuracy": 0.6667,
+      "n_features": 41
+    },
+    {
+      "timestamp": "20260313_221447",
+      "model_name": "HistGradientBoosting",
+      "model_path": "D:\\data\\antibiotic_risk_model\\models\\medium\\experiments\\20260313_221447\\model.joblib",
+      "weighted_f1": 0.9132,
+      "macro_f1": 0.6508,
+      "balanced_accuracy": 0.6667,
+      "n_features": 41
+    }
+  ],
+  "current_best": {
+    "timestamp": "20260313_221447",
+    "model_name": "HistGradientBoosting",
+    "model_path": "D:\\data\\antibiotic_risk_model\\models\\medium\\experiments\\20260313_221447\\model.joblib",
+    "weighted_f1": 0.9132,
+    "macro_f1": 0.6508,
+    "balanced_accuracy": 0.6667,
+    "n_features": 41
+  }
+}

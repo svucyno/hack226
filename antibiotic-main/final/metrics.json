@@ -1,0 +1,141 @@
+{
+  "model_name": "ExtraTrees",
+  "feature_set_name": "all_safe_v2",
+  "n_features": 38,
+  "val_metrics": {
+    "split": "val_ExtraTrees",
+    "weighted_f1": 0.946876,
+    "macro_f1": 0.806266,
+    "balanced_accuracy": 0.948148,
+    "high_recall": 1.0,
+    "ultra_score": 0.906951,
+    "classification_report": {
+      "low": {
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1-score": 0.9473684210526315,
+        "support": 10.0
+      },
+      "medium": {
+        "precision": 1.0,
+        "recall": 0.9444444444444444,
+        "f1-score": 0.9714285714285714,
+        "support": 18.0
+      },
+      "high": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1-score": 0.5,
+        "support": 1.0
+      },
+      "accuracy": 0.9310344827586207,
+      "macro avg": {
+        "precision": 0.7777777777777778,
+        "recall": 0.9481481481481482,
+        "f1-score": 0.806265664160401,
+        "support": 29.0
+      },
+      "weighted avg": {
+        "precision": 0.9770114942528735,
+        "recall": 0.9310344827586207,
+        "f1-score": 0.9468758102151931,
+        "support": 29.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        9,
+        0,
+        1
+      ],
+      [
+        0,
+        17,
+        1
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "support": 29,
+    "threshold_used": 0.175
+  },
+  "test_metrics": {
+    "split": "test",
+    "weighted_f1": 0.970799,
+    "macro_f1": 0.97812,
+    "balanced_accuracy": 0.983333,
+    "high_recall": 1.0,
+    "ultra_score": 0.986248,
+    "classification_report": {
+      "low": {
+        "precision": 0.9230769230769231,
+        "recall": 1.0,
+        "f1-score": 0.96,
+        "support": 12.0
+      },
+      "medium": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1-score": 0.9743589743589743,
+        "support": 20.0
+      },
+      "high": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 2.0
+      },
+      "accuracy": 0.9705882352941176,
+      "macro avg": {
+        "precision": 0.9743589743589745,
+        "recall": 0.9833333333333334,
+        "f1-score": 0.9781196581196582,
+        "support": 34.0
+      },
+      "weighted avg": {
+        "precision": 0.9728506787330318,
+        "recall": 0.9705882352941176,
+        "f1-score": 0.9707993966817495,
+        "support": 34.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        1,
+        19,
+        0
+      ],
+      [
+        0,
+        0,
+        2
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "support": 34,
+    "threshold_used": 0.175
+  },
+  "calibration": {
+    "calibrated": false,
+    "method": "none"
+  },
+  "smote_applied": false,
+  "threshold": 0.175
+}

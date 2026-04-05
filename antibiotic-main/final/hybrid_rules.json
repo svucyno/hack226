@@ -1,0 +1,61 @@
+{
+  "version": "1.2.0",
+  "description": "Clinical override rules for Ultra V3 hybrid decision layer. Semantic separation: antibiotic_misuse_risk reflects stewardship appropriateness; recommended_next_step reflects clinical workflow action. urgent_doctor_review is reserved for clinical urgency (instability_override) only -- high misuse risk alone maps to stewardship_review_required.",
+  "action_semantics": {
+    "stewardship_review_required": "High antibiotic misuse risk -- clinician review required before any antibiotic prescription. Not a clinical emergency.",
+    "review_recommended": "Moderate risk or mixed signals -- watchful waiting and antibiotic review recommended.",
+    "monitor_and_observe": "Low misuse risk -- standard ED protocol, no immediate antibiotic concern.",
+    "urgent_doctor_review": "CLINICAL URGENCY ONLY (instability_override): severe diagnosis + hemodynamic compromise. Immediate physician evaluation required.",
+    "doctor_review_recommended": "Model confidence low or uncertain -- human review required regardless of risk class."
+  },
+  "rules": {
+    "instability_override": {
+      "enabled": true,
+      "description": "Clinical urgency escalation: ESI acuity <= 2 AND (low_spo2 OR tachycardia) AND severe diagnosis flag. Forces possible_clinical_pattern='urgent_review' and recommended_next_step='urgent_doctor_review'. Does NOT override antibiotic_misuse_risk -- clinical severity is a separate concern from antibiotic stewardship appropriateness.",
+      "conditions": {
+        "acuity_max": 2,
+        "requires_one_of": [
+          "low_spo2_flag",
+          "tachycardia_flag"
+        ],
+        "also_requires": [
+          "diagnosis_severe_flag"
+        ]
+      },
+      "effect": "force_urgent_action_and_pattern"
+    },
+    "multi_alarm_escalation": {
+      "enabled": true,
+      "description": "Escalate 'low' -> 'medium': high fever AND tachycardia AND tachypnea all present simultaneously.",
+      "conditions": {
+        "requires_all": [
+          "high_fever_flag",
+          "tachycardia_flag",
+          "tachypnea_flag"
+        ]
+      },
+      "effect": "escalate_low_to_medium"
+    },
+    "viral_no_abx_flag": {
+      "enabled": true,
+      "description": "Flag as 'viral_no_abx' when: no antibiotic given, viral diagnosis, and at least 3 viral-signal features are present. Does not change class or action -- this is a stewardship annotation only.",
+      "conditions": {
+        "medication_antibiotic_flag": 0,
+        "diagnosis_viral_like_flag": 1,
+        "min_viral_signals": 3,
+        "viral_signal_features": [
+          "complaint_respiratory_flag",
+          "complaint_cough_flag",
+          "complaint_fever_flag",
+          "diagnosis_respiratory_flag"
+        ]
+      },
+      "effect": "flag_only"
+    },
+    "low_confidence_escalation": {
+      "enabled": true,
+      "description": "When model confidence is low or model is uncertain (top2_gap < 0.15), override recommended action to 'doctor_review_recommended'. Risk class is NOT changed.",
+      "effect": "override_action_only"
+    }
+  }
+}

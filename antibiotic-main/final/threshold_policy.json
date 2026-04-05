@@ -1,0 +1,7 @@
+{
+  "model_name": "ExtraTrees",
+  "feature_set_name": "all_safe_v2",
+  "high_class_threshold": 0.175,
+  "tuning_method": "oof_ultra_score_optimization",
+  "description": "If P(high) >= 0.175, predict 'high' regardless of argmax. Tuned on OOF from training split only."
+}

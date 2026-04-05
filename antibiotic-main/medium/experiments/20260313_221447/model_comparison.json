@@ -1,0 +1,14 @@
+[
+  {
+    "model": "RandomForest",
+    "val_weighted_f1": 0.9146,
+    "val_macro_f1": 0.6323,
+    "val_balanced_accuracy": 0.6481
+  },
+  {
+    "model": "HistGradientBoosting",
+    "val_weighted_f1": 0.9708,
+    "val_macro_f1": 0.8794,
+    "val_balanced_accuracy": 0.9815
+  }
+]

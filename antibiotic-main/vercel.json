@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://antibiotic-f206.onrender.com/api/:path*" },
+    { "source": "/predict/:path*", "destination": "https://antibiotic-f206.onrender.com/predict/:path*" },
+    { "source": "/health", "destination": "https://antibiotic-f206.onrender.com/health" },
+    { "source": "/model-info", "destination": "https://antibiotic-f206.onrender.com/model-info" }
+  ]
+}
