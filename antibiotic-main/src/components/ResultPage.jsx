@@ -98,18 +98,18 @@ function ScoreGauge({ score, level, t }) {
 /* Confidence bar */
 function ConfidenceBar({ value, t }) {
   const [w, setW] = useState(0)
-  useEffect(() => { const t = setTimeout(() => setW(value), 400); return () => clearTimeout(t) }, [value])
+  useEffect(() => { const tm = setTimeout(() => setW(value), 400); return () => clearTimeout(tm) }, [value])
   return (
     <div className="rp-conf">
       <div className="rp-conf__header">
-        <span>{t ? t('resultPage.aiConfidence') : 'AI Confidence Score'}</span>
+        <span>{t('resultPage.aiConfidence')}</span>
         <span className="rp-conf__value">{value}%</span>
       </div>
       <div className="rp-conf__track">
         <div className="rp-conf__fill" style={{ width: `${w}%` }}/>
       </div>
       <div className="rp-conf__labels">
-        <span>{t ? t('result.lowRisk') : 'Low'}</span><span>{t ? t('result.mediumRisk') : 'Moderate'}</span><span>{t ? t('result.highRisk') : 'High'}</span>
+        <span>{t('result.lowRisk')}</span><span>{t('result.mediumRisk')}</span><span>{t('result.highRisk')}</span>
       </div>
     </div>
   )
@@ -124,9 +124,9 @@ export default function ResultPage() {
   if (!state?.result) {
     return (
       <div className="rp-empty">
-        <h2>No analysis data found.</h2>
+        <h2>{t('common.noAnalysisData')}</h2>
         <button className="hero__btn-primary" onClick={() => navigate('/analysis')}>
-          Start New Analysis
+          {t('common.startNewAnalysis')}
         </button>
       </div>
     )

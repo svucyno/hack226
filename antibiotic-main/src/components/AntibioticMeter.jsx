@@ -292,7 +292,7 @@ function GaugeChart({ score }) {
           {animated ? score : 0}
         </text>
         <text x="100" y="110" textAnchor="middle" fontSize="10" fill="#64748b" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="1">
-          RISK SCORE
+          {t('common.riskScore').toUpperCase()}
         </text>
         <text x="100" y="126" textAnchor="middle" fontSize="9" fill={level.color} fontFamily="Inter,sans-serif" fontWeight="700">
           {t(level.labelKey).toUpperCase()}

@@ -673,6 +673,7 @@ function PredictionModal({ tool, onClose }) {
   const [form, setForm]       = useState({})
   const [loading, setLoading] = useState(false)
   const [result, setResult]   = useState(null)
+  const { t } = useLanguage()
 
   function set(key, val) { setForm(f => ({ ...f, [key]: val })) }
 
@@ -777,11 +778,11 @@ function PredictionModal({ tool, onClose }) {
             <button type="submit" className={`${tool.status === 'featured' ? 'btn-primary' : 'btn-secondary'} dp-modal__submit`} disabled={loading}>
               {loading ? (
                 <span style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center' }}>
-                  <span className="dp-modal__spinner" /> Analysing...
+                  <span className="dp-modal__spinner" /> {t('common.analysing')}
                 </span>
               ) : (
                 <>
-                  <span>Run AI Analysis</span>
+                  <span>{t('common.runAnalysis')}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
@@ -795,14 +796,14 @@ function PredictionModal({ tool, onClose }) {
               {/* Score + Level */}
               <div className="dp-modal__result-head">
                 <div>
-                  <div className="dp-modal__result-small-label">Risk Score</div>
+                  <div className="dp-modal__result-small-label">{t('common.riskScore')}</div>
                   <div className="dp-modal__score" style={{ color: lvl.color }}>{result.score}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
                   <div className="dp-modal__level-badge" style={{ color: lvl.color, background: lvl.bg, borderColor: lvl.border }}>
                     {lvl.label}
                   </div>
-                  <div className="dp-modal__confidence">Confidence: {result.confidence}%</div>
+                  <div className="dp-modal__confidence">{t('common.confidence')}: {result.confidence}%</div>
                   {result._demo && (
                     <div className="dp-modal__demo-badge">⚡ Client-side mode</div>
                   )}
@@ -825,7 +826,7 @@ function PredictionModal({ tool, onClose }) {
               {detailList.length > 0 && (
                 <div className="dp-modal__result-section">
                   <div className="dp-modal__result-section-title">
-                    {tool.id === 'misuse-checker' ? 'Risk Flags' : 'Clinical Indicators'}
+                    {tool.id === 'misuse-checker' ? t('common.riskFlags') : t('common.clinicalIndicators')}
                   </div>
                   <ul className="dp-modal__reason-list">
                     {detailList.map((r, i) => <li key={i} className="dp-modal__reason-item">{r}</li>)}
@@ -836,7 +837,7 @@ function PredictionModal({ tool, onClose }) {
               {/* Recommendations (misuse only) */}
               {tool.id === 'misuse-checker' && result.recommendations?.length > 0 && (
                 <div className="dp-modal__result-section">
-                  <div className="dp-modal__result-section-title">Recommendations</div>
+                  <div className="dp-modal__result-section-title">{t('common.recommendations')}</div>
                   <ul className="dp-modal__reason-list">
                     {result.recommendations.map((r, i) => <li key={i} className="dp-modal__reason-item">{r}</li>)}
                   </ul>
@@ -850,7 +851,7 @@ function PredictionModal({ tool, onClose }) {
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 5, verticalAlign: 'middle' }}>
                       <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0c0 5-2 9-5 11m5-11c0 5 2 9 5 11"/>
                     </svg>
-                    AI-Suggested Alternatives &amp; Home Remedies
+                    {t('common.aiSuggestedAlternatives')}
                   </div>
                   <ul className="dp-modal__reason-list">
                     {result.alternatives.map((r, i) => (
@@ -863,7 +864,7 @@ function PredictionModal({ tool, onClose }) {
               {/* Antibiotic note (respiratory only) */}
               {tool.id === 'respiratory' && (
                 <div className="dp-modal__result-section">
-                  <div className="dp-modal__result-section-title">Antibiotic Recommendation</div>
+                  <div className="dp-modal__result-section-title">{t('common.antibioticRecommendation')}</div>
                   <div className="dp-modal__action-box" style={
                     result.antibiotic_recommended
                       ? { background: 'rgba(239,68,68,0.08)', color: '#ef4444' }
@@ -878,7 +879,7 @@ function PredictionModal({ tool, onClose }) {
 
               {/* Action */}
               <div className="dp-modal__result-section">
-                <div className="dp-modal__result-section-title">Recommended Action</div>
+                <div className="dp-modal__result-section-title">{t('common.recommendedAction')}</div>
                 <div className="dp-modal__action-box">{result.action}</div>
               </div>
             </div>
@@ -934,7 +935,7 @@ export default function DiseasePrediction() {
                   <div className="disease__card-icon">{tool.icon}</div>
                   <div className="disease__card-accuracy">
                     <div className="disease__accuracy-value">{tool.accuracy}%</div>
-                    <div className="disease__accuracy-label">Accuracy</div>
+                    <div className="disease__accuracy-label">{t('common.accuracy')}</div>
                   </div>
                 </div>
 
@@ -949,9 +950,9 @@ export default function DiseasePrediction() {
                   className={tool.status === 'featured' ? 'btn-primary disease__btn' : 'btn-secondary disease__btn'}
                   onClick={() => tool.endpoint && setActiveModal(tool)}
                   disabled={!tool.endpoint}
-                  title={!tool.endpoint ? 'Coming soon' : undefined}
+                  title={!tool.endpoint ? t('common.comingSoon') : undefined}
                 >
-                  <span>{tool.endpoint ? 'Run Analysis' : 'Coming Soon'}</span>
+                  <span>{tool.endpoint ? t('common.runAnalysis') : t('common.comingSoon')}</span>
                   {tool.endpoint && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
