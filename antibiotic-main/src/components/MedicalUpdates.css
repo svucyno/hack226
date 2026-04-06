@@ -110,6 +110,17 @@
   overflow: hidden;
 }
 
+.updates__card-excerpt--expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}
+
+.updates__featured-excerpt--expanded {
+  overflow: visible;
+}
+
 /* Meta */
 .updates__meta {
   display: flex;

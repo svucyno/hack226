@@ -1,75 +1,76 @@
+import { useState } from 'react'
 import { useLanguage } from '../utils/LanguageContext'
 import './MedicalUpdates.css'
 
 const UPDATES = [
   {
     id: 1,
-    category: 'Alert',
+    categoryKey: 'updates.categoryAlert',
     categoryColor: 'red',
-    title: 'WHO Warning: Antibiotic Resistance Reaches Critical Levels',
-    excerpt: 'Global health authorities issue urgent guidance on the escalating antibiotic resistance crisis. Over 1.2 million deaths annually attributable to resistant bacteria.',
-    date: 'Mar 12, 2026',
-    readTime: '4 min read',
+    titleKey: 'updates.article1.title',
+    excerptKey: 'updates.article1.excerpt',
+    dateKey: 'updates.article1.date',
+    readTimeKey: 'updates.article1.readTime',
     image: 'alert',
     gradStart: '#ef4444',
     gradEnd: '#f59e0b',
   },
   {
     id: 2,
-    category: 'Guideline',
+    categoryKey: 'updates.categoryGuideline',
     categoryColor: 'blue',
-    title: 'New Antibiotic Stewardship Guidelines for Primary Care Clinics',
-    excerpt: 'Updated clinical protocols for antibiotic prescription in outpatient settings. Key changes include mandatory AI-screening for respiratory infections.',
-    date: 'Mar 10, 2026',
-    readTime: '6 min read',
+    titleKey: 'updates.article2.title',
+    excerptKey: 'updates.article2.excerpt',
+    dateKey: 'updates.article2.date',
+    readTimeKey: 'updates.article2.readTime',
     image: 'guide',
     gradStart: '#0ea5e9',
     gradEnd: '#8b5cf6',
   },
   {
     id: 3,
-    category: 'Research',
+    categoryKey: 'updates.categoryResearch',
     categoryColor: 'teal',
-    title: 'AI Model Achieves 98% Accuracy in Differentiating Viral vs Bacterial Infections',
-    excerpt: 'Breakthrough study from Stanford demonstrates machine learning can reduce unnecessary antibiotic prescriptions by 67% in emergency departments.',
-    date: 'Mar 8, 2026',
-    readTime: '8 min read',
+    titleKey: 'updates.article3.title',
+    excerptKey: 'updates.article3.excerpt',
+    dateKey: 'updates.article3.date',
+    readTimeKey: 'updates.article3.readTime',
     image: 'research',
     gradStart: '#0d9488',
     gradEnd: '#22c55e',
   },
   {
     id: 4,
-    category: 'Prevention',
+    categoryKey: 'updates.categoryPrevention',
     categoryColor: 'green',
-    title: 'Top 10 Infection Prevention Strategies for Healthcare Workers',
-    excerpt: 'Evidence-based protocols for minimizing infection spread and reducing the pressure for antibiotic use in clinical environments.',
-    date: 'Mar 6, 2026',
-    readTime: '5 min read',
+    titleKey: 'updates.article4.title',
+    excerptKey: 'updates.article4.excerpt',
+    dateKey: 'updates.article4.date',
+    readTimeKey: 'updates.article4.readTime',
     image: 'prevent',
     gradStart: '#22c55e',
     gradEnd: '#0d9488',
   },
   {
     id: 5,
-    category: 'Public Health',
+    categoryKey: 'updates.categoryPublicHealth',
     categoryColor: 'teal',
-    title: 'Community Awareness Campaign: "Antibiotics Are Not Always the Answer"',
-    excerpt: 'National health campaign results show 40% reduction in patient-driven antibiotic demand following AI-powered patient education initiatives.',
-    date: 'Mar 4, 2026',
-    readTime: '3 min read',
+    titleKey: 'updates.article5.title',
+    excerptKey: 'updates.article5.excerpt',
+    dateKey: 'updates.article5.date',
+    readTimeKey: 'updates.article5.readTime',
     image: 'public',
     gradStart: '#14b8a6',
     gradEnd: '#0ea5e9',
   },
   {
     id: 6,
-    category: 'Technology',
+    categoryKey: 'updates.categoryTechnology',
     categoryColor: 'blue',
-    title: 'Smart Prescription Systems Integrate with Hospital EHR Platforms',
-    excerpt: 'New interoperability standards allow AI risk-alert systems to directly flag inappropriate antibiotic orders within existing clinical workflows.',
-    date: 'Mar 2, 2026',
-    readTime: '5 min read',
+    titleKey: 'updates.article6.title',
+    excerptKey: 'updates.article6.excerpt',
+    dateKey: 'updates.article6.date',
+    readTimeKey: 'updates.article6.readTime',
     image: 'tech',
     gradStart: '#8b5cf6',
     gradEnd: '#ec4899',
@@ -95,6 +96,21 @@ const TAG_COLOR_MAP = {
 
 export default function MedicalUpdates() {
   const { t } = useLanguage()
+  const [expandedById, setExpandedById] = useState({})
+  const [showAllUpdates, setShowAllUpdates] = useState(false)
+  const featured = UPDATES[0]
+  const READ_LESS = 'Read Less'
+
+  const isExpanded = (id) => Boolean(expandedById[id])
+  const toggleExpanded = (id) => {
+    setExpandedById((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
+
+  const getExcerpt = (key, id, previewLength) => {
+    const text = t(key)
+    if (isExpanded(id) || text.length <= previewLength) return text
+    return `${text.slice(0, previewLength).trim()}...`
+  }
 
   return (
     <section className="updates section section-alt" id="updates">
@@ -116,10 +132,10 @@ export default function MedicalUpdates() {
         <div className="updates__layout">
           {/* Featured article */}
           <div className="updates__featured card animate-fadein anime-delay-1">
-            <div className="updates__featured-visual" style={{ background: `linear-gradient(135deg, ${UPDATES[0].gradStart}, ${UPDATES[0].gradEnd})` }}>
+            <div className="updates__featured-visual" style={{ background: `linear-gradient(135deg, ${featured.gradStart}, ${featured.gradEnd})` }}>
               <div className="updates__featured-icon">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  {ICON_MAP[UPDATES[0].image]}
+                  {ICON_MAP[featured.image]}
                 </svg>
               </div>
               <div className="updates__featured-overlay" />
@@ -127,14 +143,16 @@ export default function MedicalUpdates() {
 
             <div className="updates__featured-content">
               <div className="updates__meta">
-                <span className={`tag ${TAG_COLOR_MAP[UPDATES[0].categoryColor]}`}>{UPDATES[0].category}</span>
-                <span className="updates__date">{UPDATES[0].date}</span>
-                <span className="updates__read-time">{UPDATES[0].readTime}</span>
+                <span className={`tag ${TAG_COLOR_MAP[featured.categoryColor]}`}>{t(featured.categoryKey)}</span>
+                <span className="updates__date">{t(featured.dateKey)}</span>
+                <span className="updates__read-time">{t(featured.readTimeKey)}</span>
               </div>
-              <h3 className="updates__featured-title">{UPDATES[0].title}</h3>
-              <p className="updates__featured-excerpt">{UPDATES[0].excerpt}</p>
-              <button className="btn-primary updates__read-btn">
-                {t('updates.readFull')}
+              <h3 className="updates__featured-title">{t(featured.titleKey)}</h3>
+              <p className={`updates__featured-excerpt${isExpanded(featured.id) ? ' updates__featured-excerpt--expanded' : ''}`}>
+                {getExcerpt(featured.excerptKey, featured.id, 110)}
+              </p>
+              <button type="button" className="btn-primary updates__read-btn" onClick={() => toggleExpanded(featured.id)}>
+                {isExpanded(featured.id) ? READ_LESS : t('updates.readFull')}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
@@ -153,13 +171,15 @@ export default function MedicalUpdates() {
                 </div>
                 <div className="updates__card-body">
                   <div className="updates__meta">
-                    <span className={`tag ${TAG_COLOR_MAP[u.categoryColor]}`}>{u.category}</span>
-                    <span className="updates__date">{u.date}</span>
+                    <span className={`tag ${TAG_COLOR_MAP[u.categoryColor]}`}>{t(u.categoryKey)}</span>
+                    <span className="updates__date">{t(u.dateKey)}</span>
                   </div>
-                  <h4 className="updates__card-title">{u.title}</h4>
-                  <p className="updates__card-excerpt">{u.excerpt}</p>
-                  <button className="btn-ghost">
-                    {t('updates.readMore')}
+                  <h4 className="updates__card-title">{t(u.titleKey)}</h4>
+                  <p className={`updates__card-excerpt${isExpanded(u.id) ? ' updates__card-excerpt--expanded' : ''}`}>
+                    {getExcerpt(u.excerptKey, u.id, 85)}
+                  </p>
+                  <button type="button" className="btn-ghost" onClick={() => toggleExpanded(u.id)}>
+                    {isExpanded(u.id) ? READ_LESS : t('updates.readMore')}
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                   </button>
                 </div>
@@ -168,31 +188,38 @@ export default function MedicalUpdates() {
           </div>
         </div>
 
-        {/* Bottom row */}
-        <div className="updates__bottom-row">
-          {UPDATES.slice(4).map((u, i) => (
-            <div key={u.id} className={`updates__mini card animate-fadein anime-delay-${i + 4}`}>
-              <div className="updates__mini-icon" style={{ background: `linear-gradient(135deg, ${u.gradStart}, ${u.gradEnd})` }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  {ICON_MAP[u.image]}
-                </svg>
-              </div>
-              <div>
-                <div className="updates__meta" style={{ marginBottom: 4 }}>
-                  <span className={`tag ${TAG_COLOR_MAP[u.categoryColor]}`}>{u.category}</span>
-                  <span className="updates__date">{u.date}</span>
+        {/* Bottom row (hidden until View All is clicked) */}
+        {showAllUpdates && (
+          <div className="updates__bottom-row">
+            {UPDATES.slice(4).map((u, i) => (
+              <div key={u.id} className={`updates__mini card animate-fadein anime-delay-${i + 4}`}>
+                <div className="updates__mini-icon" style={{ background: `linear-gradient(135deg, ${u.gradStart}, ${u.gradEnd})` }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    {ICON_MAP[u.image]}
+                  </svg>
                 </div>
-                <h4 className="updates__mini-title">{u.title}</h4>
-                <button className="btn-ghost">{t('updates.readMore')} →</button>
+                <div>
+                  <div className="updates__meta" style={{ marginBottom: 4 }}>
+                    <span className={`tag ${TAG_COLOR_MAP[u.categoryColor]}`}>{t(u.categoryKey)}</span>
+                    <span className="updates__date">{t(u.dateKey)}</span>
+                  </div>
+                  <h4 className="updates__mini-title">{t(u.titleKey)}</h4>
+                  <p className={`updates__card-excerpt${isExpanded(u.id) ? ' updates__card-excerpt--expanded' : ''}`}>
+                    {getExcerpt(u.excerptKey, u.id, 70)}
+                  </p>
+                  <button type="button" className="btn-ghost" onClick={() => toggleExpanded(u.id)}>
+                    {isExpanded(u.id) ? READ_LESS : `${t('updates.readMore')} →`}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* View all */}
         <div className="updates__view-all">
-          <button className="btn-secondary">
-            {t('updates.viewAll')}
+          <button type="button" className="btn-secondary" onClick={() => setShowAllUpdates((prev) => !prev)}>
+            {showAllUpdates ? t('meter.back') : t('updates.viewAll')}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>

@@ -70,28 +70,28 @@ function computeRisk(f) {
   const confidence = Math.round(72 + Math.random() * 22)
   const pattern =
     f.suspected_infection_type === 'viral' || (dur <= 3 && f.runny_nose === 'yes')
-      ? 'Viral-like'
-      : score >= 68 ? 'Urgent review'
-      : 'Bacterial suspicion'
+      ? 'viral-like'
+      : score >= 68 ? 'urgent review'
+      : 'bacterial suspicion'
   const reasons = []
-  if (dur <= 3)                               reasons.push('Short symptom duration (likely viral)')
-  if (dur >= 7)                               reasons.push('Prolonged symptom duration')
-  if (f.fever === 'yes')                      reasons.push('Fever present')
-  if (f.fever === 'no')                       reasons.push('No fever detected (mild presentation)')
-  if (f.recent_antibiotic_use === 'yes')      reasons.push('Recent antibiotic use — resistance risk')
-  if (f.suspected_infection_type === 'viral') reasons.push('Viral infection suspected by clinician')
-  if (!isNaN(crp) && crp <= 5)               reasons.push('Normal CRP level')
-  if (!isNaN(crp) && crp > 10)               reasons.push('Elevated CRP — bacterial indicator')
-  if (!isNaN(wbc) && wbc <= 11)              reasons.push('Normal WBC count')
-  if (!isNaN(wbc) && wbc > 11)               reasons.push('Elevated WBC — possible bacterial infection')
+  if (dur <= 3)                               reasons.push('result.shortDuration')
+  if (dur >= 7)                               reasons.push('result.prolongedDuration')
+  if (f.fever === 'yes')                      reasons.push('result.feverPresent')
+  if (f.fever === 'no')                       reasons.push('result.noFever')
+  if (f.recent_antibiotic_use === 'yes')      reasons.push('result.recentAbuse')
+  if (f.suspected_infection_type === 'viral') reasons.push('result.viralSuspected')
+  if (!isNaN(crp) && crp <= 5)               reasons.push('result.normalCrp')
+  if (!isNaN(crp) && crp > 10)               reasons.push('result.elevatedCrp')
+  if (!isNaN(wbc) && wbc <= 11)              reasons.push('result.normalWbc')
+  if (!isNaN(wbc) && wbc > 11)               reasons.push('result.elevatedWbc')
   if (!isNaN(spo2) && spo2 < 94)             reasons.push(`Low SpO₂ (${spo2}%) — respiratory concern`)
   if (!isNaN(spo2) && spo2 >= 97)            reasons.push(`Normal SpO₂ (${spo2}%)`)
   if (!isNaN(pulse) && pulse > 100)          reasons.push(`Tachycardia (${pulse} bpm)`)
   if (!isNaN(temp)  && temp >= 38)           reasons.push(`Confirmed fever (${temp}°C)`)
   if (!isNaN(temp)  && temp < 36)            reasons.push(`Hypothermia (${temp}°C)`)
-  if (symptomCount <= 2)                      reasons.push('Limited symptom cluster')
+  if (symptomCount <= 2)                      reasons.push('result.limitedSymptoms')
   const action =
-    level === 'Low' ? 'Observe' : level === 'Medium' ? 'Doctor Review' : 'Further Testing'
+    level === 'Low' ? 'observe' : level === 'Medium' ? 'doctor review' : 'further testing'
   return { score, level, confidence, pattern, reasons: reasons.slice(0, 6), action }
 }
 

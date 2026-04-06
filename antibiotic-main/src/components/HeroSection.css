@@ -229,7 +229,7 @@
 }
 .hero__stat-value--danger { color: #f43f5e; text-shadow: 0 0 12px rgba(244,63,94,0.4); }
 .hero__stat-value--safe   { color: #00d4c8; text-shadow: 0 0 12px rgba(0,212,200,0.4); }
-.hero__stat-label { font-size: 0.75rem; color: #607090; font-weight: 500; }
+.hero__stat-label { font-size: 0.78rem; color: #a0bcd8; font-weight: 500; }
 
 /* ─────────────────────────────────────────
    Visual / 3D Video Area

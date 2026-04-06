@@ -1,34 +1,36 @@
+import { useLanguage } from '../utils/LanguageContext'
 import './Footer.css'
 
-const FOOTER_LINKS = {
-  Platform: [
-    'AI Risk Analysis',
-    'Disease Prediction',
-    'Doctor Consultancy',
-    'Usage Meter',
-    'Medical Updates',
-    'Resistance Database',
-  ],
-  Healthcare: [
-    'Antibiotic Guidelines',
-    'WHO Protocols',
-    'CDC Resources',
-    'Clinical Research',
-    'Patient Education',
-    'Hospital Integration',
-  ],
-  Support: [
-    'Help Center',
-    'Contact Us',
-    'Report Issue',
-    'Privacy Policy',
-    'Terms of Service',
-    'API Documentation',
-  ],
-}
-
 export default function Footer() {
+  const { t } = useLanguage()
   const year = new Date().getFullYear()
+
+  const FOOTER_LINKS = {
+    Platform: [
+      t('footer.aiRisk') || 'AI Risk Analysis',
+      t('footer.diseasePred') || 'Disease Prediction',
+      t('footer.doctorConsult') || 'Doctor Consultancy',
+      t('footer.usageMeter') || 'Usage Meter',
+      t('footer.medicalUpdates') || 'Medical Updates',
+      t('footer.resistanceDb') || 'Resistance Database',
+    ],
+    Healthcare: [
+      t('footer.guidelines') || 'Antibiotic Guidelines',
+      t('footer.whoProtocols') || 'WHO Protocols',
+      t('footer.cdcResources') || 'CDC Resources',
+      t('footer.clinicalResearch') || 'Clinical Research',
+      t('footer.patientEducation') || 'Patient Education',
+      t('footer.hospitalIntegration') || 'Hospital Integration',
+    ],
+    Support: [
+      t('footer.helpCenter') || 'Help Center',
+      t('footer.contactUs') || 'Contact Us',
+      t('footer.reportIssue') || 'Report Issue',
+      t('footer.privacy') || 'Privacy Policy',
+      t('footer.terms') || 'Terms of Service',
+      t('footer.documentation') || 'API Documentation',
+    ],
+  }
 
   return (
     <footer className="footer">
@@ -59,14 +61,12 @@ export default function Footer() {
               </div>
               <div>
                 <div className="footer__logo-name">AntibioticAI</div>
-                <div className="footer__logo-sub">Risk Alert System</div>
+                <div className="footer__logo-sub">{t('nav.logoTagline')}</div>
               </div>
             </div>
 
             <p className="footer__brand-desc">
-              An intelligent healthcare platform leveraging AI to combat antibiotic
-              misuse and resistance. Empowering clinicians with real-time risk analysis
-              and decision support tools.
+              {t('footer.brandDesc')}
             </p>
 
             {/* Badges */}
@@ -75,7 +75,7 @@ export default function Footer() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                HIPAA Compliant
+                {t('footer.hipaa') || 'HIPAA Compliant'}
               </div>
               <div className="footer__badge">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -104,12 +104,16 @@ export default function Footer() {
           </div>
 
           {/* Links columns */}
-          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
-            <div className="footer__col" key={title}>
-              <h4 className="footer__col-title">{title}</h4>
+          {[
+            { titleKey: 'footer.platform', title: 'Platform', links: FOOTER_LINKS['Platform'] || [] },
+            { titleKey: 'footer.healthcare', title: 'Healthcare', links: FOOTER_LINKS['Healthcare'] || [] },
+            { titleKey: 'footer.support', title: 'Support', links: FOOTER_LINKS['Support'] || [] },
+          ].map(col => (
+            <div className="footer__col" key={col.title}>
+              <h4 className="footer__col-title">{t(col.titleKey) || col.title}</h4>
               <ul className="footer__col-links">
-                {links.map(link => (
-                  <li key={link}>
+                {col.links.map((link, idx) => (
+                  <li key={idx}>
                     <a href="#" className="footer__link">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                         <path d="M9 18l6-6-6-6"/>

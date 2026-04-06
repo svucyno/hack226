@@ -42,14 +42,14 @@
 }
 .footer__logo-sub {
   font-size: 0.67rem;
-  color: #475569;
+  color: #a0bcd8;
   font-weight: 500;
 }
 
 .footer__brand-desc {
   font-size: 0.83rem;
   line-height: 1.7;
-  color: #64748b;
+  color: #a0bcd8;
   margin-bottom: 20px;
 }
 
@@ -63,9 +63,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #475569;
+  color: #a0bcd8;
 }
 .footer__badge svg { color: #14b8a6; flex-shrink: 0; }
 
@@ -112,7 +112,7 @@
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
-  color: #64748b;
+  color: #a0bcd8;
   transition: var(--tr-fast);
   text-decoration: none;
 }
@@ -123,7 +123,7 @@
 /* Newsletter */
 .footer__newsletter-desc {
   font-size: 0.82rem;
-  color: #64748b;
+  color: #a0bcd8;
   line-height: 1.6;
   margin-bottom: 14px;
 }
@@ -155,8 +155,8 @@
   justify-content: center;
 }
 .footer__newsletter-note {
-  font-size: 0.72rem;
-  color: #475569;
+  font-size: 0.75rem;
+  color: #a0bcd8;
   line-height: 1.5;
 }
 
@@ -188,8 +188,8 @@
   text-transform: uppercase;
 }
 .footer__disclaimer p {
-  font-size: 0.76rem;
-  color: #64748b;
+  font-size: 0.78rem;
+  color: #a0bcd8;
   line-height: 1.65;
 }
 
@@ -207,7 +207,7 @@
 }
 .footer__copyright {
   font-size: 0.78rem;
-  color: #475569;
+  color: #a0bcd8;
 }
 .footer__bottom-links {
   display: flex;
@@ -215,7 +215,7 @@
 }
 .footer__bottom-link {
   font-size: 0.78rem;
-  color: #475569;
+  color: #a0bcd8;
   text-decoration: none;
   transition: var(--tr-fast);
 }

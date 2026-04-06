@@ -1,27 +1,28 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '../utils/LanguageContext'
 import './ResultPage.css'
 
 const LEVEL_CFG = {
-  Low:    { color: '#22c55e', bg: 'rgba(34,197,94,0.10)',  border: 'rgba(34,197,94,0.30)',  icon: '✓', label: 'Low Risk', grad: ['#16a34a','#22c55e'] },
-  Medium: { color: '#f59e0b', bg: 'rgba(245,158,11,0.10)', border: 'rgba(245,158,11,0.30)', icon: '⚠', label: 'Moderate Risk', grad: ['#d97706','#f59e0b'] },
-  High:   { color: '#ef4444', bg: 'rgba(239,68,68,0.10)',  border: 'rgba(239,68,68,0.30)',  icon: '!', label: 'High Risk', grad: ['#dc2626','#ef4444'] },
+  Low:    { color: '#22c55e', bg: 'rgba(34,197,94,0.10)',  border: 'rgba(34,197,94,0.30)',  icon: '✓', labelKey: 'result.lowRisk', grad: ['#16a34a','#22c55e'] },
+  Medium: { color: '#f59e0b', bg: 'rgba(245,158,11,0.10)', border: 'rgba(245,158,11,0.30)', icon: '⚠', labelKey: 'result.mediumRisk', grad: ['#d97706','#f59e0b'] },
+  High:   { color: '#ef4444', bg: 'rgba(239,68,68,0.10)',  border: 'rgba(239,68,68,0.30)',  icon: '!', labelKey: 'result.highRisk', grad: ['#dc2626','#ef4444'] },
 }
 
 const ACTION_CFG = {
-  'observe':          { icon: '👁', title: 'Observe & Monitor', sub: 'No immediate antibiotic needed. Rest and monitor symptoms for 48–72 hours.', color: '#22c55e' },
-  'doctor review':    { icon: '👨‍⚕️', title: 'Doctor Review Advised', sub: 'Schedule a clinical consultation within 24 hours for professional evaluation.', color: '#f59e0b' },
-  'further testing':  { icon: '🔬', title: 'Further Testing Required', sub: 'Urgent clinical review + additional diagnostics (blood culture, chest X-ray) recommended.', color: '#ef4444' },
+  'observe':          { icon: '👁', titleKey: 'actions.observe', subKey: 'actions.observeDesc', color: '#22c55e' },
+  'doctor review':    { icon: '👨‍⚕️', titleKey: 'actions.doctorReview', subKey: 'actions.doctorReviewDesc', color: '#f59e0b' },
+  'further testing':  { icon: '🔬', titleKey: 'actions.furtherTesting', subKey: 'actions.furtherTestingDesc', color: '#ef4444' },
 }
 
 const PATTERN_CFG = {
-  'viral-like':           { color: '#0891b2', icon: '🦠', desc: 'Symptom pattern consistent with viral infection' },
-  'bacterial suspicion':  { color: '#7c3aed', icon: '🧫', desc: 'Clinical indicators suggest possible bacterial cause' },
-  'urgent review':        { color: '#dc2626', icon: '🚨', desc: 'Urgent clinical evaluation required' },
+  'viral-like':           { color: '#0891b2', icon: '🦠', descKey: 'result.viralLike' },
+  'bacterial suspicion':  { color: '#7c3aed', icon: '🧫', descKey: 'result.bacterialSuspicion' },
+  'urgent review':        { color: '#dc2626', icon: '🚨', descKey: 'result.urgentReview' },
 }
 
 /* Animated score gauge */
-function ScoreGauge({ score, level }) {
+function ScoreGauge({ score, level, t }) {
   const cfg = LEVEL_CFG[level]
   const circumference = 502
   const [animated, setAnimated] = useState(false)
@@ -75,18 +76,18 @@ function ScoreGauge({ score, level }) {
         </text>
         <text x="100" y="108" textAnchor="middle" fontSize="9.5" fill="#64748b"
           fontFamily="Inter,sans-serif" fontWeight="700" letterSpacing="1.5">
-          RISK SCORE
+          {t('result.riskScore')}
         </text>
         <text x="100" y="124" textAnchor="middle" fontSize="9" fill={cfg.color}
           fontFamily="Inter,sans-serif" fontWeight="800" letterSpacing="0.5">
-          {cfg.label.toUpperCase()}
+          {t(cfg.labelKey)}
         </text>
       </svg>
       <div className="rp-gauge__legend">
         {Object.entries(LEVEL_CFG).map(([k, v]) => (
           <div key={k} className={`rp-gauge__leg-item${level === k ? ' rp-gauge__leg-item--active' : ''}`}>
             <span className="rp-gauge__leg-dot" style={{ background: v.color }}/>
-            <span>{v.label}</span>
+            <span>{t(v.labelKey)}</span>
           </div>
         ))}
       </div>
@@ -95,20 +96,20 @@ function ScoreGauge({ score, level }) {
 }
 
 /* Confidence bar */
-function ConfidenceBar({ value }) {
+function ConfidenceBar({ value, t }) {
   const [w, setW] = useState(0)
   useEffect(() => { const t = setTimeout(() => setW(value), 400); return () => clearTimeout(t) }, [value])
   return (
     <div className="rp-conf">
       <div className="rp-conf__header">
-        <span>AI Confidence Score</span>
+        <span>{t ? t('resultPage.aiConfidence') : 'AI Confidence Score'}</span>
         <span className="rp-conf__value">{value}%</span>
       </div>
       <div className="rp-conf__track">
         <div className="rp-conf__fill" style={{ width: `${w}%` }}/>
       </div>
       <div className="rp-conf__labels">
-        <span>Low</span><span>Moderate</span><span>High</span>
+        <span>{t ? t('result.lowRisk') : 'Low'}</span><span>{t ? t('result.mediumRisk') : 'Moderate'}</span><span>{t ? t('result.highRisk') : 'High'}</span>
       </div>
     </div>
   )
@@ -117,6 +118,7 @@ function ConfidenceBar({ value }) {
 export default function ResultPage() {
   const { state } = useLocation()
   const navigate  = useNavigate()
+  const { t } = useLanguage()
 
   // Guard: if landed directly without form state, redirect
   if (!state?.result) {
@@ -133,8 +135,8 @@ export default function ResultPage() {
   const { form, result } = state
   const { score, level, confidence, pattern, reasons, action } = result
   const cfg    = LEVEL_CFG[level]
-  const actCfg = ACTION_CFG[action]
-  const patCfg = PATTERN_CFG[pattern] || PATTERN_CFG['viral-like']
+  const patCfg = { ...PATTERN_CFG[pattern], desc: t(PATTERN_CFG[pattern]?.descKey || 'result.urgentReview') }
+  const actCfg = { ...ACTION_CFG[action], title: t(ACTION_CFG[action]?.titleKey || 'actions.observe'), sub: t(ACTION_CFG[action]?.subKey || 'actions.observeDesc') }
 
   return (
     <div className="rp-page">
@@ -152,20 +154,20 @@ export default function ResultPage() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
             </svg>
-            AI Analysis Result
+            {t('resultPage.analysisResult')}
           </div>
           <h1 className="rp-header__title">
-            Risk <span className="gradient-text">Assessment Report</span>
+            Risk <span className="gradient-text">{t('resultPage.riskAssessment')}</span>
           </h1>
           <div className="rp-patient-tag">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
             </svg>
-            Patient: <strong>{form.patient_id}</strong>
+            {t('resultPage.patient')}: <strong>{form.patient_id}</strong>
             <span className="rp-sep" />
-            Age: <strong>{form.age}</strong>
+            {t('resultPage.age')}: <strong>{form.age}</strong>
             <span className="rp-sep" />
-            Sex: <strong>{form.sex}</strong>
+            {t('resultPage.sex')}: <strong>{form.sex}</strong>
           </div>
         </div>
 
@@ -174,8 +176,8 @@ export default function ResultPage() {
 
           {/* Gauge column */}
           <div className="rp-gauge-col card">
-            <div className="rp-card-label">Risk Score Meter</div>
-            <ScoreGauge score={score} level={level} />
+            <div className="rp-card-label">{t('resultPage.riskScoreMeter')}</div>
+            <ScoreGauge score={score} level={level} t={t} />
           </div>
 
           {/* Risk + pattern + confidence */}
@@ -186,8 +188,8 @@ export default function ResultPage() {
               style={{ '--risk-color': cfg.color, '--risk-bg': cfg.bg, '--risk-border': cfg.border }}>
               <div className="rp-risk-icon">{cfg.icon}</div>
               <div>
-                <div className="rp-risk-level">{cfg.label}</div>
-                <div className="rp-risk-sub">Antibiotic Misuse Risk Level</div>
+                <div className="rp-risk-level">{t(cfg.labelKey)}</div>
+                <div className="rp-risk-sub">{t('resultPage.antibioticMisuse')}</div>
               </div>
               <div className="rp-risk-score-pill">{score}/100</div>
             </div>
@@ -197,7 +199,7 @@ export default function ResultPage() {
               style={{ '--pat-color': patCfg.color }}>
               <div className="rp-pattern__icon">{patCfg.icon}</div>
               <div>
-                <div className="rp-pattern__label">Possible Pattern</div>
+                <div className="rp-pattern__label">{t('resultPage.possiblePattern')}</div>
                 <div className="rp-pattern__value" style={{ color: patCfg.color }}>
                   {pattern.charAt(0).toUpperCase() + pattern.slice(1)}
                 </div>
@@ -207,7 +209,7 @@ export default function ResultPage() {
 
             {/* Confidence */}
             <div className="card" style={{ padding: '20px 22px' }}>
-              <ConfidenceBar value={confidence} />
+              <ConfidenceBar value={confidence} t={t} />
             </div>
           </div>
         </div>
@@ -218,7 +220,7 @@ export default function ResultPage() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
             </svg>
-            AI Reasoning Factors
+            {t('resultPage.aiReasons')}
           </div>
           <div className="rp-reasons">
             {reasons.map((r, i) => (
@@ -229,7 +231,7 @@ export default function ResultPage() {
                   stroke={cfg.color} strokeWidth="2.5">
                   <polyline points="20 6 9 17 4 12"/>
                 </svg>
-                <span className="rp-reason__text">{r}</span>
+                <span className="rp-reason__text">{t(r)}</span>
               </div>
             ))}
           </div>
@@ -241,23 +243,23 @@ export default function ResultPage() {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
             </svg>
-            Input Data Summary
+            {t('resultPage.inputSummary')}
           </div>
           <div className="rp-inputs-grid">
             {[
-              { label: 'Fever',              val: form.fever },
-              { label: 'Cough',              val: form.cough },
-              { label: 'Sore Throat',        val: form.sore_throat },
-              { label: 'Runny Nose',         val: form.runny_nose },
-              { label: 'Duration',           val: `${form.symptom_duration_days} day(s)` },
-              { label: 'Recent Antibiotic',  val: form.recent_antibiotic_use },
-              { label: 'Allergy',            val: form.antibiotic_allergy },
-              { label: 'Infection Type',     val: form.suspected_infection_type || '—' },
-              { label: 'WBC',                val: form.WBC_count ? `${form.WBC_count} ×10³/μL` : '—' },
-              { label: 'CRP',                val: form.CRP_level  ? `${form.CRP_level} mg/L`   : '—' },
+              { labelKey: 'form.fever',              val: form.fever },
+              { labelKey: 'form.cough',              val: form.cough },
+              { labelKey: 'form.soreThroat',        val: form.sore_throat },
+              { labelKey: 'form.runnyNose',         val: form.runny_nose },
+              { labelKey: 'form.symptomDuration',           val: `${form.symptom_duration_days} day(s)` },
+              { labelKey: 'form.recentAntibiotics',  val: form.recent_antibiotic_use },
+              { labelKey: 'form.antibioticAllergy',            val: form.antibiotic_allergy },
+              { labelKey: 'form.suspectedInfection',     val: form.suspected_infection_type || '—' },
+              { labelKey: 'form.wbcCount',                val: form.WBC_count ? `${form.WBC_count} ×10³/μL` : '—' },
+              { labelKey: 'form.crpLevel',  val: form.CRP_level  ? `${form.CRP_level} mg/L`   : '—' },
             ].map(item => (
-              <div className="rp-input-chip" key={item.label}>
-                <span className="rp-input-chip__label">{item.label}</span>
+              <div className="rp-input-chip" key={item.labelKey}>
+                <span className="rp-input-chip__label">{t(item.labelKey)}</span>
                 <span className={`rp-input-chip__val${item.val === 'yes' ? ' v-yes' : item.val === 'no' ? ' v-no' : ''}`}>
                   {item.val}
                 </span>
@@ -271,7 +273,7 @@ export default function ResultPage() {
           style={{ '--act-color': actCfg.color }}>
           <div className="rp-action-icon">{actCfg.icon}</div>
           <div className="rp-action-body">
-            <div className="rp-action-label">Recommended Action</div>
+            <div className="rp-action-label">{t('resultPage.recommendedAction') || 'Recommended Action'}</div>
             <div className="rp-action-title">{actCfg.title}</div>
             <p className="rp-action-sub">{actCfg.sub}</p>
           </div>
@@ -282,8 +284,7 @@ export default function ResultPage() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          This AI analysis is a <strong>decision-support tool only</strong> and does not replace
-          professional medical diagnosis. Always consult a licensed healthcare provider for clinical decisions.
+          {t('resultPage.disclaimer') || 'This AI analysis is a decision-support tool only and does not replace professional medical diagnosis. Always consult a licensed healthcare provider for clinical decisions.'}
         </div>
 
         {/* ── Action buttons ── */}
@@ -293,21 +294,21 @@ export default function ResultPage() {
               <path d="M1 4v6h6"/><path d="M23 20v-6h-6"/>
               <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/>
             </svg>
-            New Analysis
+            {t('resultPage.newAnalysis') || 'New Analysis'}
           </button>
           <button className="hero__btn-secondary rp-btn" onClick={() => navigate('/doctors')}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
-            Consult a Doctor
+            {t('resultPage.consultDoctor') || 'Consult a Doctor'}
           </button>
           <button className="rp-btn-print" onClick={() => window.print()}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
               <rect x="6" y="14" width="12" height="8"/>
             </svg>
-            Print Report
+            {t('resultPage.printReport') || 'Print Report'}
           </button>
         </div>
 

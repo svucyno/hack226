@@ -32,7 +32,7 @@
   margin: 12px 0 10px;
   letter-spacing: -0.02em;
 }
-.pf-header__sub { color: #607090; font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0 auto; }
+.pf-header__sub { color: #a0bcd8; font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0 auto; }
 
 /* Stepper */
 .pf-stepper { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 16px; }
@@ -94,7 +94,7 @@
 .pf-section-label {
   display: flex; align-items: center; gap: 8px;
   font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: #607090; margin-bottom: 16px;
+  color: #a0bcd8; margin-bottom: 16px;
 }
 .pf-optional-badge {
   font-size: 0.65rem; padding: 2px 8px; border-radius: 999px;
@@ -110,7 +110,7 @@
 /* Field */
 .pf-field { display: flex; flex-direction: column; gap: 6px; }
 .pf-field__label { font-size: 0.85rem; font-weight: 600; color: #a0bcd8; display: flex; align-items: center; gap: 6px; }
-.pf-field__hint  { font-size: 0.72rem; font-weight: 400; color: #607090; }
+.pf-field__hint  { font-size: 0.78rem; font-weight: 400; color: #a0bcd8; }
 
 /* Input */
 .pf-input {
@@ -154,14 +154,14 @@
   transition: border-color 0.2s ease;
 }
 .pf-yesno:hover { border-color: rgba(0,212,200,0.28); }
-.pf-yesno__label { font-size: 0.875rem; font-weight: 600; color: #a0bcd8; }
+.pf-yesno__label { font-size: 0.875rem; font-weight: 600; color: #d4e4f7; }
 .pf-yesno__btns  { display: flex; gap: 6px; }
 .pf-yesno__btn {
   padding: 6px 14px; border-radius: 999px;
   border: 1.5px solid rgba(100,150,200,0.18);
   background: rgba(4,8,26,0.80);
   font-size: 0.78rem; font-weight: 700; cursor: pointer;
-  transition: all 0.18s ease; color: #607090;
+  transition: all 0.18s ease; color: #a0bcd8;
 }
 .pf-yesno__btn--yes.pf-yesno__btn--active {
   background: linear-gradient(135deg, #047857, #10d98e);
@@ -184,7 +184,7 @@
   background: rgba(4,8,26,0.55);
   border: 1.5px solid rgba(0,212,200,0.10);
   border-radius: 10px;
-  font-size: 0.8rem; color: #607090; line-height: 1.5; min-height: 80px;
+  font-size: 0.85rem; color: #a0bcd8; line-height: 1.5; min-height: 80px;
 }
 .pf-duration-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; align-self: flex-start; }
 .pf-duration-badge.green { background: rgba(16,217,142,0.14); color: #10d98e; }
@@ -228,7 +228,7 @@
 }
 .pf-infection-icon  { font-size: 2rem; line-height: 1; }
 .pf-infection-label { font-size: 0.9rem; font-weight: 700; color: #e4eeff; }
-.pf-infection-desc  { font-size: 0.72rem; color: #607090; }
+.pf-infection-desc  { font-size: 0.8rem; color: #a0bcd8; }
 .pf-infection-check {
   position: absolute; top: 8px; right: 8px;
   width: 20px; height: 20px; border-radius: 50%;
@@ -239,7 +239,7 @@
 /* Input with unit */
 .pf-input-with-unit { position: relative; display: flex; align-items: center; }
 .pf-input-with-unit .pf-input { padding-right: 70px; }
-.pf-unit { position: absolute; right: 12px; font-size: 0.72rem; font-weight: 600; color: #607090; white-space: nowrap; pointer-events: none; }
+.pf-unit { position: absolute; right: 12px; font-size: 0.78rem; font-weight: 600; color: #a0bcd8; white-space: nowrap; pointer-events: none; }
 .pf-lab-hint { font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; margin-top: 4px; align-self: flex-start; }
 .pf-lab-hint.green { background: rgba(16,217,142,0.14); color: #10d98e; }
 .pf-lab-hint.amber { background: rgba(251,191,36,0.14);  color: #fbbf24; }
@@ -252,7 +252,7 @@
   background: rgba(0,212,200,0.06);
   border: 1px solid rgba(0,212,200,0.18);
   border-radius: 10px;
-  font-size: 0.78rem; color: #a0bcd8; line-height: 1.6;
+  font-size: 0.8rem; color: #d4e4f7; line-height: 1.6;
 }
 .pf-info-box svg { color: #00d4c8; flex-shrink: 0; margin-top: 1px; }
 .pf-info-box--amber { background: rgba(251,191,36,0.06); border-color: rgba(251,191,36,0.22); }
@@ -264,7 +264,7 @@
   padding: 12px 24px; border-radius: 999px;
   border: 1.5px solid rgba(0,212,200,0.22);
   background: rgba(4,8,26,0.80);
-  font-size: 0.9rem; font-weight: 600; color: #607090; cursor: pointer;
+  font-size: 0.9rem; font-weight: 600; color: #a0bcd8; cursor: pointer;
   transition: all 0.2s ease;
 }
 .pf-btn-back:hover { border-color: #00d4c8; color: #00d4c8; box-shadow: 0 0 10px rgba(0,212,200,0.20); }

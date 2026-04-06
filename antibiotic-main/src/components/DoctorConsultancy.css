@@ -37,6 +37,14 @@
   box-shadow: 0 4px 12px rgba(13,148,136,0.35);
 }
 
+.doctors__action-msg {
+  text-align: center;
+  margin: -24px auto 24px;
+  color: var(--clr-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
 /* Doctor grid */
 .doctors__grid {
   display: grid;

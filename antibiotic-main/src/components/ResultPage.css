@@ -61,7 +61,7 @@
 .rp-gauge__legend { display: flex; flex-direction: column; gap: 6px; width: 100%; }
 .rp-gauge__leg-item {
   display: flex; align-items: center; gap: 8px;
-  font-size: 0.78rem; color: #94a3b8; font-weight: 500;
+  font-size: 0.8rem; color: #d4e4f7; font-weight: 500;
 }
 .rp-gauge__leg-item--active { color: #0f172a; font-weight: 700; }
 .rp-gauge__leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -110,15 +110,15 @@
   border-left: 3px solid var(--pat-color) !important;
 }
 .rp-pattern__icon { font-size: 1.8rem; }
-.rp-pattern__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #94a3b8; }
+.rp-pattern__label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #d4e4f7; }
 .rp-pattern__value { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 800; margin: 2px 0; }
-.rp-pattern__desc  { font-size: 0.75rem; color: #64748b; }
+.rp-pattern__desc  { font-size: 0.78rem; color: #a0bcd8; }
 
 /* Confidence bar */
 .rp-conf { display: flex; flex-direction: column; gap: 8px; }
 .rp-conf__header {
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.82rem; font-weight: 600; color: #475569;
+  font-size: 0.85rem; font-weight: 600; color: #d4e4f7;
 }
 .rp-conf__value {
   font-family: 'Space Grotesk', sans-serif;
@@ -138,7 +138,7 @@
 }
 .rp-conf__labels {
   display: flex; justify-content: space-between;
-  font-size: 0.65rem; color: #94a3b8; font-weight: 600;
+  font-size: 0.7rem; color: #a0bcd8; font-weight: 600;
 }
 
 /* Section cards */
@@ -169,7 +169,7 @@
   color: #94a3b8; letter-spacing: 0.05em;
   flex-shrink: 0;
 }
-.rp-reason__text { font-size: 0.875rem; color: #334155; font-weight: 500; }
+.rp-reason__text { font-size: 0.9rem; color: #d4e4f7; font-weight: 500; }
 
 /* Inputs summary */
 .rp-inputs-grid {
@@ -184,8 +184,8 @@
   border: 1px solid #e2e8f0;
   border-radius: 10px;
 }
-.rp-input-chip__label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
-.rp-input-chip__val   { font-size: 0.82rem; font-weight: 700; color: #334155; text-transform: capitalize; }
+.rp-input-chip__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #a0bcd8; }
+.rp-input-chip__val   { font-size: 0.85rem; font-weight: 700; color: #d4e4f7; text-transform: capitalize; }
 .rp-input-chip__val.v-yes { color: #15803d; }
 .rp-input-chip__val.v-no  { color: #64748b; }
 
@@ -205,7 +205,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 6px;
 }
-.rp-action-sub { font-size: 0.875rem; color: #475569; line-height: 1.6; }
+.rp-action-sub { font-size: 0.9rem; color: #0f172a; line-height: 1.6; }
 
 /* Disclaimer */
 .rp-disclaimer {

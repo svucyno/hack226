@@ -93,8 +93,8 @@
   line-height: 1;
 }
 .disease__accuracy-label {
-  font-size: 0.68rem;
-  color: var(--clr-text-3);
+  font-size: 0.7rem;
+  color: #a0bcd8;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -113,7 +113,7 @@
 
 .disease__card-desc {
   font-size: 0.85rem;
-  color: var(--clr-text-3);
+  color: #a0bcd8;
   line-height: 1.65;
   margin-bottom: 16px;
 }
@@ -306,9 +306,9 @@
 }
 
 .dp-modal__result-small-label {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: var(--clr-text-3, #9ca3af);
+  color: #a0bcd8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 2px;
@@ -332,8 +332,8 @@
 }
 
 .dp-modal__confidence {
-  font-size: 0.73rem;
-  color: var(--clr-text-3, #9ca3af);
+  font-size: 0.75rem;
+  color: #a0bcd8;
   margin-top: 6px;
 }
 
@@ -359,11 +359,11 @@
 .dp-modal__result-stat:nth-child(even) { border-right: none; }
 
 .dp-modal__result-stat-label {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--clr-text-3, #9ca3af);
+  color: #a0bcd8;
   margin-bottom: 3px;
 }
 
@@ -380,11 +380,11 @@
 .dp-modal__result-section:last-child { border-bottom: none; }
 
 .dp-modal__result-section-title {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--clr-text-3, #9ca3af);
+  color: #a0bcd8;
   margin-bottom: 8px;
 }
 

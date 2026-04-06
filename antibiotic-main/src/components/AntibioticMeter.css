@@ -96,8 +96,8 @@
   align-items: center;
   gap: 6px;
   width: 130px;
-  font-size: 0.75rem;
-  color: var(--clr-text-3);
+  font-size: 0.78rem;
+  color: #a0bcd8;
   white-space: nowrap;
 }
 .meter__bar-track {
@@ -114,9 +114,9 @@
   box-shadow: 0 0 8px currentColor;
 }
 .meter__bar-pct {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--clr-text-3);
+  color: #a0bcd8;
   width: 30px;
   text-align: right;
 }
@@ -295,7 +295,7 @@
   letter-spacing: -0.02em;
 }
 .meter__form-sub {
-  color: var(--clr-text-3);
+  color: #a0bcd8;
   font-size: 0.95rem;
   line-height: 1.7;
   max-width: 520px;
@@ -404,11 +404,11 @@
 }
 
 .vitals__field-map-label {
-  font-size: 0.73rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #607090;
+  color: #a0bcd8;
   flex-shrink: 0;
   margin-right: 4px;
 }
@@ -501,8 +501,8 @@
 }
 
 .vitals__card-normal {
-  font-size: 0.71rem;
-  color: #607090;
+  font-size: 0.73rem;
+  color: #a0bcd8;
   font-weight: 500;
   margin-bottom: 4px;
 }
@@ -543,8 +543,8 @@
 .meter__alt-panel--warning .meter__alt-title { color: #ef4444; }
 
 .meter__alt-sub {
-  font-size: 0.8rem;
-  color: var(--clr-text-3);
+  font-size: 0.82rem;
+  color: #a0bcd8;
   margin-bottom: 16px;
   line-height: 1.55;
 }

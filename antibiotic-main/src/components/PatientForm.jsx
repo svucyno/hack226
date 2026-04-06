@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLanguage } from '../utils/LanguageContext'
 import './PatientForm.css'
 
 /* ── Mock risk engine (replace with real API call later) ── */
@@ -36,17 +37,17 @@ function computeRisk(f) {
       : 'bacterial suspicion'
 
   const reasons = []
-  if (dur <= 3)                               reasons.push('Short symptom duration (likely viral)')
-  if (dur >= 7)                               reasons.push('Prolonged symptom duration')
-  if (f.fever === 'yes')                      reasons.push('Fever present')
-  if (f.fever === 'no')                       reasons.push('No fever detected (mild presentation)')
-  if (f.recent_antibiotic_use === 'yes')      reasons.push('Recent antibiotic use — resistance risk')
-  if (f.suspected_infection_type === 'viral') reasons.push('Viral infection suspected by clinician')
-  if (!isNaN(crp) && crp <= 5)               reasons.push('Normal CRP level')
-  if (!isNaN(crp) && crp > 10)               reasons.push('Elevated CRP — bacterial indicator')
-  if (!isNaN(wbc) && wbc <= 11)              reasons.push('Normal WBC count')
-  if (!isNaN(wbc) && wbc > 11)              reasons.push('Elevated WBC — possible bacterial infection')
-  if (symptomCount <= 2)                      reasons.push('Limited symptom cluster')
+  if (dur <= 3)                               reasons.push('form.shortDuration')
+  if (dur >= 7)                               reasons.push('form.prolongedDuration')
+  if (f.fever === 'yes')                      reasons.push('form.feverPresent')
+  if (f.fever === 'no')                       reasons.push('form.noFever')
+  if (f.recent_antibiotic_use === 'yes')      reasons.push('form.recentAbuse')
+  if (f.suspected_infection_type === 'viral') reasons.push('form.viralSuspected')
+  if (!isNaN(crp) && crp <= 5)               reasons.push('form.normalCrp')
+  if (!isNaN(crp) && crp > 10)               reasons.push('form.elevatedCrp')
+  if (!isNaN(wbc) && wbc <= 11)              reasons.push('form.normalWbc')
+  if (!isNaN(wbc) && wbc > 11)              reasons.push('form.elevatedWbc')
+  if (symptomCount <= 2)                      reasons.push('form.limitedSymptoms')
 
   const action =
     level === 'Low'    ? 'observe'
@@ -57,13 +58,7 @@ function computeRisk(f) {
 }
 
 /* ── Field helpers ── */
-const STEPS = [
-  { id: 1, label: 'Patient Info',     icon: '👤' },
-  { id: 2, label: 'Symptoms',         icon: '🌡️' },
-  { id: 3, label: 'Clinical Details', icon: '🔬' },
-]
-
-function YesNo({ label, field, value, onChange }) {
+function YesNo({ label, field, value, onChange, t }) {
   return (
     <div className="pf-yesno">
       <div className="pf-yesno__label">{label}</div>
@@ -75,7 +70,7 @@ function YesNo({ label, field, value, onChange }) {
             className={`pf-yesno__btn pf-yesno__btn--${opt}${value === opt ? ' pf-yesno__btn--active' : ''}`}
             onClick={() => onChange(field, opt)}
           >
-            {opt === 'yes' ? '✓ Yes' : '✗ No'}
+            {opt === 'yes' ? `✓ ${t('form.yes')}` : `✗ ${t('form.no')}`}
           </button>
         ))}
       </div>
@@ -103,9 +98,16 @@ const INIT = {
 
 export default function PatientForm() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [step, setStep]   = useState(1)
   const [form, setForm]   = useState(INIT)
   const [errors, setErrors] = useState({})
+
+  const STEPS = [
+    { id: 1, labelKey: 'form.patientInfo',    icon: '👤' },
+    { id: 2, labelKey: 'form.symptoms',       icon: '🌡️' },
+    { id: 3, labelKey: 'form.clinicalDetails', icon: '🔬' },
+  ]
 
   const set = (field, val) => {
     setForm(f => ({ ...f, [field]: val }))
@@ -163,7 +165,7 @@ export default function PatientForm() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
             </svg>
-            AI Risk Analysis — Patient Form
+            {t('meter.badge')} — {t('form.patientInfo')}
           </div>
           <h1 className="pf-header__title">
             Enter <span className="gradient-text">Patient Data</span>
@@ -184,7 +186,7 @@ export default function PatientForm() {
                   : <span>{s.icon}</span>
                 }
               </div>
-              <span className="pf-step__label">{s.label}</span>
+              <span className="pf-step__label">{t(s.labelKey)}</span>
               {i < STEPS.length - 1 && (
                 <div className={`pf-step__line${step > s.id ? ' pf-step__line--done' : ''}`} />
               )}
@@ -204,21 +206,11 @@ export default function PatientForm() {
           {step === 1 && (
             <div className="pf-step-content">
               <div className="pf-step-title">
-                <span>👤</span> Basic Patient Information
+                <span>👤</span> {t('form.patientInfo')}
               </div>
 
               <div className="pf-grid pf-grid--3">
-                <Field label="Patient ID" hint="Unique identifier">
-                  <input
-                    className={`pf-input${errors.patient_id ? ' pf-input--error' : ''}`}
-                    placeholder="e.g. PAT-2026-001"
-                    value={form.patient_id}
-                    onChange={e => set('patient_id', e.target.value)}
-                  />
-                  {errors.patient_id && <span className="pf-error">{errors.patient_id}</span>}
-                </Field>
-
-                <Field label="Age" hint="Years">
+                <Field label={t('form.age')} hint="">
                   <input
                     className={`pf-input${errors.age ? ' pf-input--error' : ''}`}
                     type="number" min="1" max="120"
@@ -229,7 +221,7 @@ export default function PatientForm() {
                   {errors.age && <span className="pf-error">{errors.age}</span>}
                 </Field>
 
-                <Field label="Sex">
+                <Field label={t('form.sex')} hint="">
                   <div className="pf-radio-group">
                     {['Male','Female','Other'].map(opt => (
                       <button
@@ -244,35 +236,28 @@ export default function PatientForm() {
                   {errors.sex && <span className="pf-error">{errors.sex}</span>}
                 </Field>
               </div>
-
-              <div className="pf-info-box">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
-                </svg>
-                Patient identifiers are used only for this analysis session and are not stored permanently.
-              </div>
             </div>
           )}
 
           {/* ── STEP 2: Symptoms ─── */}
           {step === 2 && (
             <div className="pf-step-content">
-              <div className="pf-step-title"><span>🌡️</span> Symptoms & Duration</div>
+              <div className="pf-step-title"><span>🌡️</span> {t('form.symptoms')}</div>
 
-              <div className="pf-section-label">Reported Symptoms</div>
+              <div className="pf-section-label">{t('form.symptoms')}</div>
               <div className="pf-yesno-grid">
-                <YesNo label="🌡️ Fever"          field="fever"       value={form.fever}       onChange={set} />
-                <YesNo label="😮‍💨 Cough"          field="cough"       value={form.cough}       onChange={set} />
-                <YesNo label="🦠 Sore Throat"    field="sore_throat" value={form.sore_throat} onChange={set} />
-                <YesNo label="🤧 Runny Nose"     field="runny_nose"  value={form.runny_nose}  onChange={set} />
+                <YesNo label={`🌡️ ${t('form.fever')}`}          field="fever"       value={form.fever}       onChange={set} t={t} />
+                <YesNo label={`😮‍💨 ${t('form.cough')}`}          field="cough"       value={form.cough}       onChange={set} t={t} />
+                <YesNo label={`🦠 ${t('form.soreThroat')}`}    field="sore_throat" value={form.sore_throat} onChange={set} t={t} />
+                <YesNo label={`🤧 ${t('form.runnyNose')}`}     field="runny_nose"  value={form.runny_nose}  onChange={set} t={t} />
               </div>
               {(errors.fever || errors.cough || errors.sore_throat || errors.runny_nose) && (
-                <span className="pf-error">Please select Yes or No for all symptoms</span>
+                <span className="pf-error">Please select {t('form.yes')} or {t('form.no')} for all symptoms</span>
               )}
 
-              <div className="pf-section-label" style={{ marginTop: 24 }}>Symptom Timeline</div>
+              <div className="pf-section-label" style={{ marginTop: 24 }}>{t('form.symptomDuration')}</div>
               <div className="pf-grid pf-grid--2">
-                <Field label="Symptom Duration" hint="Number of days">
+                <Field label={t('form.symptomDuration')} hint="">
                   <div className="pf-number-wrap">
                     <button type="button" className="pf-num-btn" onClick={() => set('symptom_duration_days', Math.max(1, (parseInt(form.symptom_duration_days)||0) - 1).toString())}>−</button>
                     <input
@@ -286,24 +271,6 @@ export default function PatientForm() {
                   </div>
                   {errors.symptom_duration_days && <span className="pf-error">{errors.symptom_duration_days}</span>}
                 </Field>
-
-                {/* Duration severity indicator */}
-                <div className="pf-duration-hint">
-                  {form.symptom_duration_days && (
-                    <>
-                      <div className={`pf-duration-badge${+form.symptom_duration_days <= 3 ? ' green' : +form.symptom_duration_days <= 7 ? ' amber' : ' red'}`}>
-                        {+form.symptom_duration_days <= 3 ? '✓ Acute / Short' : +form.symptom_duration_days <= 7 ? '⚠ Moderate' : '⚠ Prolonged'}
-                      </div>
-                      <p>
-                        {+form.symptom_duration_days <= 3
-                          ? 'Usually viral. Antibiotics often not needed.'
-                          : +form.symptom_duration_days <= 7
-                          ? 'Monitor closely. Clinical review recommended.'
-                          : 'Prolonged — bacterial cause more likely. Doctor review advised.'}
-                      </p>
-                    </>
-                  )}
-                </div>
               </div>
             </div>
           )}
@@ -311,23 +278,23 @@ export default function PatientForm() {
           {/* ── STEP 3: Medical History + Clinical ─── */}
           {step === 3 && (
             <div className="pf-step-content">
-              <div className="pf-step-title"><span>🔬</span> Medical History & Clinical Inputs</div>
+              <div className="pf-step-title"><span>🔬</span> {t('form.clinicalDetails')}</div>
 
-              <div className="pf-section-label">Medical History</div>
+              <div className="pf-section-label">{t('form.recentAntibiotics')}</div>
               <div className="pf-yesno-grid">
-                <YesNo label="💊 Recent Antibiotic Use" field="recent_antibiotic_use" value={form.recent_antibiotic_use} onChange={set} />
-                <YesNo label="⚠️ Antibiotic Allergy"   field="antibiotic_allergy"    value={form.antibiotic_allergy}    onChange={set} />
+                <YesNo label={`💊 ${t('form.recentAntibiotics')}`} field="recent_antibiotic_use" value={form.recent_antibiotic_use} onChange={set} t={t} />
+                <YesNo label={`⚠️ ${t('form.antibioticAllergy')}`}   field="antibiotic_allergy"    value={form.antibiotic_allergy}    onChange={set} t={t} />
               </div>
               {(errors.recent_antibiotic_use || errors.antibiotic_allergy) && (
                 <span className="pf-error">Please answer all medical history fields</span>
               )}
 
-              <div className="pf-section-label" style={{ marginTop: 28 }}>Suspected Infection Type</div>
+              <div className="pf-section-label" style={{ marginTop: 28 }}>{t('form.suspectedInfection')}</div>
               <div className="pf-infection-grid">
                 {[
-                  { val: 'viral',      label: 'Viral',      icon: '🦠', color: '#0891b2', desc: 'Cold, flu, COVID-like' },
-                  { val: 'bacterial',  label: 'Bacterial',  icon: '🧫', color: '#dc2626', desc: 'Strep, UTI, pneumonia' },
-                  { val: 'unknown',    label: 'Unknown',    icon: '❓', color: '#7c3aed', desc: 'Not yet determined' },
+                  { val: 'viral',      label: 'Viral',      icon: '🦠', color: '#0891b2' },
+                  { val: 'bacterial',  label: 'Bacterial',  icon: '🧫', color: '#dc2626' },
+                  { val: 'unknown',    label: 'Unknown',    icon: '❓', color: '#7c3aed' },
                 ].map(opt => (
                   <button
                     key={opt.val} type="button"
@@ -337,7 +304,6 @@ export default function PatientForm() {
                   >
                     <span className="pf-infection-icon">{opt.icon}</span>
                     <span className="pf-infection-label">{opt.label}</span>
-                    <span className="pf-infection-desc">{opt.desc}</span>
                     {form.suspected_infection_type === opt.val && (
                       <span className="pf-infection-check">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -348,55 +314,6 @@ export default function PatientForm() {
                   </button>
                 ))}
               </div>
-
-              <div className="pf-section-label" style={{ marginTop: 28 }}>
-                Optional Clinical Lab Values
-                <span className="pf-optional-badge">Optional</span>
-              </div>
-              <div className="pf-grid pf-grid--2">
-                <Field label="WBC Count" hint="×10³/μL — normal 4–11">
-                  <div className="pf-input-with-unit">
-                    <input
-                      className="pf-input"
-                      type="number" step="0.1" min="0" max="100"
-                      placeholder="e.g. 8.5"
-                      value={form.WBC_count}
-                      onChange={e => set('WBC_count', e.target.value)}
-                    />
-                    <span className="pf-unit">×10³/μL</span>
-                  </div>
-                  {form.WBC_count && (
-                    <div className={`pf-lab-hint${+form.WBC_count > 11 ? ' red' : +form.WBC_count < 4 ? ' amber' : ' green'}`}>
-                      {+form.WBC_count > 11 ? '⬆ Elevated — possible bacterial' : +form.WBC_count < 4 ? '⬇ Low count' : '✓ Normal range'}
-                    </div>
-                  )}
-                </Field>
-
-                <Field label="CRP Level" hint="mg/L — normal < 5">
-                  <div className="pf-input-with-unit">
-                    <input
-                      className="pf-input"
-                      type="number" step="0.1" min="0" max="500"
-                      placeholder="e.g. 3.2"
-                      value={form.CRP_level}
-                      onChange={e => set('CRP_level', e.target.value)}
-                    />
-                    <span className="pf-unit">mg/L</span>
-                  </div>
-                  {form.CRP_level && (
-                    <div className={`pf-lab-hint${+form.CRP_level > 10 ? ' red' : +form.CRP_level > 5 ? ' amber' : ' green'}`}>
-                      {+form.CRP_level > 10 ? '⬆ High — strong bacterial marker' : +form.CRP_level > 5 ? '⚠ Mildly elevated' : '✓ Normal range'}
-                    </div>
-                  )}
-                </Field>
-              </div>
-
-              <div className="pf-info-box pf-info-box--amber">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4m0 4h.01"/>
-                </svg>
-                Lab values improve AI accuracy but are not mandatory. Leave blank if unavailable.
-              </div>
             </div>
           )}
 
@@ -404,13 +321,13 @@ export default function PatientForm() {
           <div className="pf-nav">
             {step > 1 && (
               <button type="button" className="pf-btn-back" onClick={back}>
-                ← Back
+                ← {t('meter.back')}
               </button>
             )}
             <div style={{ flex: 1 }} />
             {step < 3 && (
               <button type="button" className="hero__btn-primary pf-btn-next" onClick={next}>
-                Continue →
+                {t('meter.continue')} →
               </button>
             )}
             {step === 3 && (
@@ -418,7 +335,7 @@ export default function PatientForm() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                 </svg>
-                Run AI Analysis
+                {t('meter.analyzeRisk')}
               </button>
             )}
           </div>
