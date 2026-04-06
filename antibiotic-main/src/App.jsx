@@ -7,7 +7,6 @@ import AntibioticMeter from './components/AntibioticMeter'
 import DiseasePrediction from './components/DiseasePrediction'
 import DoctorConsultancy from './components/DoctorConsultancy'
 import MedicalUpdates from './components/MedicalUpdates'
-import PatientForm from './components/PatientForm'
 import ResultPage from './components/ResultPage'
 import Footer from './components/Footer'
 import './App.css'
@@ -188,7 +187,7 @@ function AppShell() {
         <div className="page-view" key={pathname}>
           <Routes>
             <Route path="/"                   element={<HeroSection />} />
-            <Route path="/analysis"           element={<PatientForm />} />
+            <Route path="/analysis"           element={<AntibioticMeter />} />
             <Route path="/result"             element={<ResultPage />} />
             <Route path="/usage-meter"        element={<AntibioticMeter />} />
             <Route path="/disease-prediction" element={<DiseasePrediction />} />
