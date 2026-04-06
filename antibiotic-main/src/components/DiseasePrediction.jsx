@@ -153,6 +153,151 @@ const TOOLS = [
       { key: 'shared_with_others',   label: 'Shared With Others',                   type: 'select', options: ['yes', 'no'] },
     ],
   },
+  {
+    id: 'uti',
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" fill="url(#dpUti)"/>
+        <path d="M24 12v10m0 4v2" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <circle cx="24" cy="18" r="6" stroke="white" strokeWidth="2" fill="none"/>
+        <path d="M16 28c-2 2-2 6 0 8M32 28c2 2 2 6 0 8" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+        <defs><linearGradient id="dpUti" x1="0" y1="0" x2="48" y2="48"><stop stopColor="#06b6d4"/><stop offset="1" stopColor="#0891b2"/></linearGradient></defs>
+      </svg>
+    ),
+    number: '06',
+    title: 'Urinary Tract Infection (UTI) Risk',
+    desc: 'AI-driven UTI prediction using urinary symptoms, lab markers, and patient risk factors to guide antibiotic necessity.',
+    tags: ['UTI', 'Cystitis', 'Lab Markers'],
+    accuracy: 89,
+    status: 'available',
+    endpoint: '/api/predict/uti',
+    fields: [
+      { key: 'age',               label: 'Age',                    type: 'number', placeholder: '35',   min: 1,  max: 120 },
+      { key: 'dysuria',           label: 'Painful Urination',      type: 'select', options: ['yes', 'no'] },
+      { key: 'frequency',         label: 'Urinary Frequency ↑',    type: 'select', options: ['yes', 'no'] },
+      { key: 'urgency',           label: 'Urinary Urgency',        type: 'select', options: ['yes', 'no'] },
+      { key: 'flank_pain',        label: 'Flank / Lower Back Pain', type: 'select', options: ['yes', 'no'] },
+      { key: 'hematuria',         label: 'Blood in Urine',         type: 'select', options: ['yes', 'no'] },
+      { key: 'fever',             label: 'Fever',                  type: 'select', options: ['yes', 'no'] },
+      { key: 'wbc_urine',         label: 'WBC in Urine (cells/μL)', type: 'number', placeholder: '10', min: 0, max: 500, optional: true },
+    ],
+  },
+  {
+    id: 'skin-infection',
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" fill="url(#dpSkin)"/>
+        <path d="M10 20c0-2 2-4 4-4h20c2 0 4 2 4 4v8c0 2-2 4-4 4H14c-2 0-4-2-4-4z" fill="rgba(255,255,255,0.2)" stroke="white" strokeWidth="1.5"/>
+        <circle cx="16" cy="22" r="2.5" fill="white"/>
+        <circle cx="24" cy="20" r="3" fill="white"/>
+        <ellipse cx="32" cy="24" rx="2.5" ry="3" fill="white"/>
+        <defs><linearGradient id="dpSkin" x1="0" y1="0" x2="48" y2="48"><stop stopColor="#ec4899"/><stop offset="1" stopColor="#f43f5e"/></linearGradient></defs>
+      </svg>
+    ),
+    number: '07',
+    title: 'Skin & Soft Tissue Infection',
+    desc: 'Evaluate cellulitis, abscess, and wound infection risk using clinical presentation and underlying conditions.',
+    tags: ['Cellulitis', 'Abscess', 'Wound'],
+    accuracy: 87,
+    status: 'available',
+    endpoint: '/api/predict/skin-infection',
+    fields: [
+      { key: 'age',               label: 'Age',                 type: 'number', placeholder: '35',   min: 1,  max: 120 },
+      { key: 'redness',           label: 'Skin Redness',        type: 'select', options: ['yes', 'no'] },
+      { key: 'warmth',            label: 'Warmth at Site',      type: 'select', options: ['yes', 'no'] },
+      { key: 'swelling',          label: 'Swelling / Edema',    type: 'select', options: ['yes', 'no'] },
+      { key: 'pus',               label: 'Pus / Discharge',     type: 'select', options: ['yes', 'no'] },
+      { key: 'lymphadenopathy',   label: 'Swollen Lymph Nodes', type: 'select', options: ['yes', 'no'] },
+      { key: 'fever',             label: 'Fever',               type: 'select', options: ['yes', 'no'] },
+      { key: 'diabetes',          label: 'Diabetic',            type: 'select', options: ['yes', 'no'] },
+    ],
+  },
+  {
+    id: 'gi-infection',
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" fill="url(#dpGi)"/>
+        <path d="M18 16h12c1 0 2 1 2 2v14c0 1-1 2-2 2H18c-1 0-2-1-2-2V18c0-1 1-2 2-2z" fill="rgba(255,255,255,0.15)" stroke="white" strokeWidth="1.5"/>
+        <path d="M21 20h6M21 24h5M21 28h6M21 32h4" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <defs><linearGradient id="dpGi" x1="0" y1="0" x2="48" y2="48"><stop stopColor="#a855f7"/><stop offset="1" stopColor="#9333ea"/></linearGradient></defs>
+      </svg>
+    ),
+    number: '08',
+    title: 'Gastrointestinal Infection',
+    desc: 'Predict bacterial vs viral gastroenteritis and assess antibiotic need based on symptoms and risk factors.',
+    tags: ['Diarrhea', 'Gastroenteritis', 'Food-borne'],
+    accuracy: 85,
+    status: 'available',
+    endpoint: '/api/predict/gi-infection',
+    fields: [
+      { key: 'age',               label: 'Age',                  type: 'number', placeholder: '35',   min: 1,  max: 120 },
+      { key: 'diarrhea',          label: 'Diarrhea',             type: 'select', options: ['yes', 'no'] },
+      { key: 'blood_stool',       label: 'Blood in Stool',       type: 'select', options: ['yes', 'no'] },
+      { key: 'abdominal_pain',    label: 'Abdominal Pain',       type: 'select', options: ['yes', 'no'] },
+      { key: 'nausea_vomiting',   label: 'Nausea / Vomiting',    type: 'select', options: ['yes', 'no'] },
+      { key: 'fever',             label: 'Fever',                type: 'select', options: ['yes', 'no'] },
+      { key: 'stool_frequency',   label: 'Stool Frequency/Day',  type: 'number', placeholder: '3', min: 1, max: 20 },
+      { key: 'recent_travel',     label: 'Recent Travel',        type: 'select', options: ['yes', 'no'] },
+    ],
+  },
+  {
+    id: 'diabetic-foot',
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" fill="url(#dpDf)"/>
+        <path d="M15 18v16c0 1 1 2 2 2h14c1 0 2-1 2-2V18" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M17 20h3M17 24h4M17 28h5M17 32h2" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="32" cy="28" r="3" fill="rgba(255,255,255,0.4)" stroke="white" strokeWidth="1"/>
+        <defs><linearGradient id="dpDf" x1="0" y1="0" x2="48" y2="48"><stop stopColor="#d97706"/><stop offset="1" stopColor="#b45309"/></linearGradient></defs>
+      </svg>
+    ),
+    number: '09',
+    title: 'Diabetic Foot Infection Risk',
+    desc: 'Assess infection risk in diabetic foot wounds considering neuropathy, vasculopathy, and clinical signs.',
+    tags: ['Diabetes', 'Foot Ulcer', 'Neuropathy'],
+    accuracy: 88,
+    status: 'available',
+    endpoint: '/api/predict/diabetic-foot',
+    fields: [
+      { key: 'duration_diabetes',     label: 'Years with Diabetes',    type: 'number', placeholder: '5', min: 0, max: 60 },
+      { key: 'hba1c',                 label: 'HbA1c (%)',              type: 'number', placeholder: '7.2', min: 4, max: 14, step: 0.1 },
+      { key: 'neuropathy',            label: 'Diabetic Neuropathy',    type: 'select', options: ['yes', 'no', 'unsure'] },
+      { key: 'vasculopathy',          label: 'Peripheral Vasculopathy', type: 'select', options: ['yes', 'no', 'unsure'] },
+      { key: 'ulcer_present',         label: 'Foot Ulcer / Wound',     type: 'select', options: ['yes', 'no'] },
+      { key: 'wound_size',            label: 'Wound Size (cm)',        type: 'number', placeholder: '2', min: 0, max: 20, step: 0.5, optional: true },
+      { key: 'drainage',              label: 'Purulent Drainage',      type: 'select', options: ['yes', 'no'] },
+      { key: 'fever',                 label: 'Systemic Fever',         type: 'select', options: ['yes', 'no'] },
+    ],
+  },
+  {
+    id: 'sepsis-risk',
+    icon: (
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="22" fill="url(#dpSepsis)"/>
+        <path d="M24 14v20M14 24h20" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+        <circle cx="24" cy="24" r="4" fill="white"/>
+        <circle cx="24" cy="24" r="10" fill="none" stroke="white" strokeWidth="1.5" strokeDasharray="2,2"/>
+        <defs><linearGradient id="dpSepsis" x1="0" y1="0" x2="48" y2="48"><stop stopColor="#ef4444"/><stop offset="1" stopColor="#dc2626"/></linearGradient></defs>
+      </svg>
+    ),
+    number: '10',
+    title: 'Sepsis Risk Assessment',
+    desc: 'Early detection of sepsis using SIRS criteria, organ dysfunction markers, and infection risk factors.',
+    tags: ['Sepsis', 'Infection', 'Critical Care'],
+    accuracy: 92,
+    status: 'available',
+    endpoint: '/api/predict/sepsis',
+    fields: [
+      { key: 'temperature',           label: 'Temperature (°C)',       type: 'number', placeholder: '38.5', min: 35, max: 42,  step: 0.1 },
+      { key: 'heart_rate',            label: 'Heart Rate (bpm)',       type: 'number', placeholder: '95', min: 40, max: 180 },
+      { key: 'respiratory_rate',      label: 'Respiratory Rate (/min)', type: 'number', placeholder: '18', min: 8, max: 60 },
+      { key: 'wbc_count',             label: 'WBC Count (×10³/μL)',    type: 'number', placeholder: '12', min: 1, max: 50, step: 0.1 },
+      { key: 'lactate',               label: 'Lactate (mmol/L)',       type: 'number', placeholder: '2.0', min: 0, max: 20, step: 0.1, optional: true },
+      { key: 'suspected_infection',   label: 'Suspected Infection',    type: 'select', options: ['yes', 'no', 'possible'] },
+      { key: 'confusion',             label: 'Altered Mental Status',  type: 'select', options: ['yes', 'no'] },
+      { key: 'hypotension',           label: 'Hypotension (SBP < 90)',  type: 'select', options: ['yes', 'no'] },
+    ],
+  },
 ]
 
 function coerceForm(fields, form) {
@@ -384,7 +529,144 @@ function computeLocal(toolId, form) {
   if (toolId === 'fever')           return computeFever(form)
   if (toolId === 'viral-bacterial') return computeViralBacterial(form)
   if (toolId === 'misuse-checker')  return computeMisuse(form)
+  if (toolId === 'uti')             return computeUTI(form)
+  if (toolId === 'skin-infection')  return computeSkinInfection(form)
+  if (toolId === 'gi-infection')    return computeGIInfection(form)
+  if (toolId === 'diabetic-foot')   return computeDiabeticFoot(form)
+  if (toolId === 'sepsis-risk')     return computeSepsis(form)
   throw new Error('Unknown tool')
+}
+
+function computeUTI(f) {
+  let score = 20
+  if (f.dysuria === 'yes') score += 20
+  if (f.frequency === 'yes') score += 15
+  if (f.urgency === 'yes') score += 12
+  if (f.flank_pain === 'yes') score += 18
+  if (f.hematuria === 'yes') score += 14
+  if (f.fever === 'yes') score += 16
+  const wbc_urine = parseFloat(f.wbc_urine) || 0
+  if (wbc_urine > 50) score += 25; else if (wbc_urine > 10) score += 12
+  score = Math.max(5, Math.min(98, score))
+  const level = score < 38 ? 'Low' : score < 68 ? 'Medium' : 'High'
+  const confidence = Math.min(90, 65 + Math.round(Math.abs(score - 50) * 0.5))
+  const uti_type = f.flank_pain === 'yes' ? 'Possible Pyelonephritis' : 'Possible Cystitis'
+  const reasons = []
+  if (f.dysuria === 'yes') reasons.push('Dysuria — classic UTI symptom')
+  if (f.frequency === 'yes') reasons.push('Increased urinary frequency')
+  if (f.flank_pain === 'yes') reasons.push('Flank pain — suggests upper tract involvement')
+  if (f.hematuria === 'yes') reasons.push('Hematuria — indicates mucosal damage')
+  if (f.fever === 'yes') reasons.push('Fever — suggests bacterial infection')
+  if (wbc_urine > 50) reasons.push(`High WBC in urine (${wbc_urine} cells/μL) — strong infection indicator`)
+  const action = { Low: 'Monitor, increase hydration, recheck in 24–48 hours', Medium: 'Urine culture + urinalysis recommended', High: 'Urgent urine culture + antibiotic consideration' }[level]
+  return { score, level, confidence, uti_type, reasons: reasons.slice(0, 5), action }
+}
+
+function computeSkinInfection(f) {
+  let score = 15
+  if (f.redness === 'yes') score += 12
+  if (f.warmth === 'yes') score += 14
+  if (f.swelling === 'yes') score += 13
+  if (f.pus === 'yes') score += 22
+  if (f.lymphadenopathy === 'yes') score += 16
+  if (f.fever === 'yes') score += 15
+  if (f.diabetes === 'yes') score += 10
+  score = Math.max(5, Math.min(98, score))
+  const level = score < 38 ? 'Low' : score < 68 ? 'Medium' : 'High'
+  const confidence = Math.min(87, 60 + Math.round(Math.abs(score - 50) * 0.55))
+  const infection_type = f.pus === 'yes' ? 'Likely Bacterial Infection' : f.redness === 'yes' ? 'Possible Cellulitis' : 'Low Risk'
+  const reasons = []
+  if (f.pus === 'yes') reasons.push('Purulent discharge — strong bacterial indicator')
+  if (f.warmth === 'yes') reasons.push('Warmth at site — suggests active infection')
+  if (f.swelling === 'yes') reasons.push('Edema present')
+  if (f.fever === 'yes') reasons.push('Systemic fever — indicates spreading infection')
+  if (f.diabetes === 'yes') reasons.push('Diabetic patient — increased infection risk')
+  const action = { Low: 'Observe, clean wound, supportive care', Medium: 'Culture + consider topical/oral antibiotics', High: 'Urgent antibiotic therapy + possible hospitalization' }[level]
+  return { score, level, confidence, infection_type, reasons: reasons.slice(0, 5), action }
+}
+
+function computeGIInfection(f) {
+  let score = 18
+  if (f.diarrhea === 'yes') score += 18
+  if (f.blood_stool === 'yes') score += 22
+  if (f.abdominal_pain === 'yes') score += 14
+  if (f.nausea_vomiting === 'yes') score += 12
+  if (f.fever === 'yes') score += 16
+  const freq = parseInt(f.stool_frequency) || 0
+  if (freq >= 6) score += 15; else if (freq >= 4) score += 8
+  if (f.recent_travel === 'yes') score += 12
+  score = Math.max(5, Math.min(98, score))
+  const level = score < 38 ? 'Low' : score < 68 ? 'Medium' : 'High'
+  const confidence = Math.min(85, 62 + Math.round(Math.abs(score - 50) * 0.5))
+  const gi_type = f.blood_stool === 'yes' ? 'Possible Bacterial Colitis' : f.fever === 'yes' ? 'Possible Bacterial Gastroenteritis' : 'Viral vs Bacterial Undifferentiated'
+  const reasons = []
+  if (f.blood_stool === 'yes') reasons.push('Bloody diarrhea — suggests bacterial infection (E. coli, Shigella)')
+  if (freq >= 6) reasons.push(`High stool frequency (${freq}/day) — indicates significant GI involvement`)
+  if (f.fever === 'yes') reasons.push('Fever present — bacteremia possible')
+  if (f.recent_travel === 'yes') reasons.push('Recent travel — higher risk of food-borne pathogen')
+  if (f.abdominal_pain === 'yes') reasons.push('Significant abdominal pain')
+  const action = { Low: 'Hydration, ORS, monitor', Medium: 'Stool culture + consider antidiarrheals cautiously', High: 'Stool culture + antibiotic consideration + monitor hydration' }[level]
+  return { score, level, confidence, gi_type, reasons: reasons.slice(0, 5), action }
+}
+
+function computeDiabeticFoot(f) {
+  let score = 20
+  const hba1c = parseFloat(f.hba1c) || 7.0
+  if (hba1c >= 9) score += 10; else if (hba1c >= 8) score += 6
+  if (f.neuropathy === 'yes') score += 20; else if (f.neuropathy === 'unsure') score += 10
+  if (f.vasculopathy === 'yes') score += 18; else if (f.vasculopathy === 'unsure') score += 9
+  if (f.ulcer_present === 'yes') score += 25
+  const size = parseFloat(f.wound_size) || 0
+  if (size > 5) score += 15; else if (size > 2) score += 8
+  if (f.drainage === 'yes') score += 18
+  if (f.fever === 'yes') score += 20
+  score = Math.max(5, Math.min(98, score))
+  const level = score < 38 ? 'Low' : score < 68 ? 'Medium' : 'High'
+  const confidence = Math.min(88, 64 + Math.round(Math.abs(score - 50) * 0.48))
+  const risk_category = f.ulcer_present === 'yes' ? 'High-risk Ulcer' : f.neuropathy === 'yes' ? 'Neuropathic Risk' : 'Low Risk'
+  const reasons = []
+  if (f.ulcer_present === 'yes') reasons.push('Open foot ulcer — infection risk critical')
+  if (f.drainage === 'yes') reasons.push('Purulent drainage — active infection likely')
+  if (f.neuropathy === 'yes') reasons.push('Diabetic neuropathy — impaired pain sensation masks severity')
+  if (f.vasculopathy === 'yes') reasons.push('Peripheral vasculopathy — reduced healing capacity')
+  if (hba1c >= 9) reasons.push(`Poor glycemic control (HbA1c ${hba1c}%) — impaired immune response`)
+  const action = { Low: 'Regular foot inspections, good footcare', Medium: 'Aggressive wound care + culture + topical antibiotics', High: 'Hospitalization, IV antibiotics, urgent surgical evaluation' }[level]
+  return { score, level, confidence, risk_category, reasons: reasons.slice(0, 5), action }
+}
+
+function computeSepsis(f) {
+  let score = 10
+  const temp = parseFloat(f.temperature) || 37.0
+  if (temp >= 39.0) score += 6; else if (temp <= 36.0) score += 8
+  const hr = parseFloat(f.heart_rate) || 80
+  if (hr >= 110) score += 8; else if (hr < 60) score += 6
+  const rr = parseFloat(f.respiratory_rate) || 18
+  if (rr >= 22) score += 8; else if (rr <= 10) score += 6
+  const wbc = parseFloat(f.wbc_count) || 8
+  if (wbc >= 15) score += 8; else if (wbc <= 4) score += 8
+  const lactate = parseFloat(f.lactate) || 0
+  if (lactate > 4) score += 15; else if (lactate > 2) score += 10
+  if (f.suspected_infection === 'yes') score += 20; else if (f.suspected_infection === 'possible') score += 10
+  if (f.confusion === 'yes') score += 18
+  if (f.hypotension === 'yes') score += 25
+  score = Math.max(5, Math.min(98, score))
+  const sirs_criteria = [
+    temp >= 38.5 || temp <= 36,
+    hr >= 90,
+    rr >= 20,
+    wbc >= 12 || wbc <= 4
+  ].filter(Boolean).length
+  const level = score < 38 ? 'Low' : score < 68 ? 'Medium' : 'High'
+  const confidence = Math.min(92, 70 + Math.round(Math.abs(score - 50) * 0.4))
+  const sepsis_status = score >= 70 ? 'Suspected Sepsis — URGENT' : score >= 45 ? 'SIRS Present — Monitor' : 'Low Risk'
+  const reasons = []
+  if (temp >= 39.0 || temp <= 36.0) reasons.push(`Abnormal temperature (${temp.toFixed(1)}°C) — thermoregulation dysfunction`)
+  if (hr >= 110) reasons.push(`Tachycardia (${hr} bpm) — tissue hypoperfusion`)
+  if (rr >= 22) reasons.push(`Tachypnea (${rr}/min) — respiratory stress`)
+  if (lactate > 2) reasons.push(`Elevated lactate (${lactate.toFixed(1)} mmol/L) — tissue hypoxia`)
+  if (f.confusion === 'yes') reasons.push('Altered mental status — CNS involvement')
+  const action = { Low: 'Monitor vitals, maintain hydration, routine follow-up', Medium: 'Blood cultures + lactate monitoring + start empiric antibiotics', High: 'IMMEDIATE ICU + IV fluids + broad-spectrum antibiotics + vasopressors if needed' }[level]
+  return { score, level, confidence, sepsis_status, sirs_met: sirs_criteria, reasons: reasons.slice(0, 5), action }
 }
 
 function PredictionModal({ tool, onClose }) {
@@ -428,9 +710,17 @@ function PredictionModal({ tool, onClose }) {
     if (tool.id === 'fever')          return [{ label: 'Fever Type',      value: result.fever_type }]
     if (tool.id === 'viral-bacterial') return [
       { label: 'Classification', value: result.classification },
-      { label: 'WBC',            value: (result.markers?.WBC ?? '—') + ' \u00d710\u00b3/\u03bcL' },
+      { label: 'WBC',            value: (result.markers?.WBC ?? '—') + ' ×10³/μL' },
     ]
     if (tool.id === 'misuse-checker') return [{ label: 'Resistance Risk', value: result.resistance_risk }]
+    if (tool.id === 'uti')            return [{ label: 'UTI Type',       value: result.uti_type }]
+    if (tool.id === 'skin-infection') return [{ label: 'Infection Type', value: result.infection_type }]
+    if (tool.id === 'gi-infection')   return [{ label: 'GI Type',        value: result.gi_type }]
+    if (tool.id === 'diabetic-foot')  return [{ label: 'Risk Category',  value: result.risk_category }]
+    if (tool.id === 'sepsis-risk')    return [
+      { label: 'Sepsis Status',  value: result.sepsis_status },
+      { label: 'SIRS Criteria',  value: result.sirs_met + '/4 met' },
+    ]
     return []
   })() : []
 
