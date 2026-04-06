@@ -1,0 +1,233 @@
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Content */
+.modal-content {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+  padding: 40px;
+  max-width: 500px;
+  width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal header */
+.modal-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.modal-header h2 {
+  font-size: 1.5rem;
+  color: var(--clr-text);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.modal-header .doctor-name {
+  color: var(--clr-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Form */
+.consultation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--clr-text-2);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 12px;
+  border: 1.5px solid var(--clr-border);
+  border-radius: var(--r-md);
+  background: var(--clr-surface-2);
+  color: var(--clr-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: var(--tr-fast);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Success Modal */
+.success-modal {
+  text-align: center;
+  padding: 60px 40px;
+  max-width: 400px;
+}
+
+.success-icon {
+  margin-bottom: 20px;
+}
+
+.success-icon svg {
+  color: var(--clr-primary);
+  width: 48px;
+  height: 48px;
+  animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-modal h3 {
+  font-size: 1.3rem;
+  color: var(--clr-text);
+  margin: 16px 0;
+  font-weight: 700;
+}
+
+.success-modal p {
+  color: var(--clr-text-2);
+  margin: 8px 0;
+}
+
+.success-details {
+  background: rgba(13, 148, 136, 0.05);
+  border-radius: var(--r-md);
+  padding: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.success-details p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: var(--r-md);
+  border: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--tr-fast);
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--clr-text-3);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--tr-fast);
+}
+
+.modal-close:hover {
+  color: var(--clr-text);
+  transform: rotate(90deg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    padding: 24px;
+    max-width: 90vw;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+}
