@@ -69,6 +69,7 @@ const LANGUAGES = [
   { code: 'ZH', name: '中文',        flag: '🇨🇳', region: 'China' },
   { code: 'DE', name: 'Deutsch',    flag: '🇩🇪', region: 'Deutschland' },
   { code: 'PT', name: 'Português',  flag: '🇧🇷', region: 'Brasil' },
+  { code: 'TE', name: 'తెలుగు',      flag: '🇮🇳', region: 'Telangana' },
 ]
 
 function LanguageSwitcher() {
